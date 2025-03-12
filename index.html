@@ -1,145 +1,485 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-<!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KP95MR4R');</script>
-<!-- End Google Tag Manager -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-  <meta name="description" content="Půjčovna minibagru v Kněževsi, Rakovníku a okolí. Ceny již od 1600 Kč/den. Volejte +420 315 559 885">
-  <meta name="keywords" content="minibagr, kněževes, rakovník, půjčovna, příslušenství, zemní práce">
-  <title>Půjčovna minibagru Kněževes u Rakovníka - Váš pomocník pro zemní práce!</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Carousel styling */
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem;
-    }
-    .carousel img {
-      scroll-snap-align: center;
-    }
-  </style>
-</head>
-<body class="bg-gray-100">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KP95MR4R");
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <meta
+      name="description"
+      content="Půjčovna minibagru v Kněževsi, Rakovníku a okolí. Ceny již od 1600 Kč/den. Volejte +420 315 559 885"
+    />
+    <meta
+      name="keywords"
+      content="minibagr, kněževes, rakovník, půjčovna, příslušenství, zemní práce"
+    />
+    <title>
+      Půjčovna minibagru Kněževes u Rakovníka - Váš pomocník pro zemní práce!
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Carousel styling */
+      .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+      }
+      .carousel img {
+        scroll-snap-align: center;
+      }
+    </style>
+    <!-- <script
+      src="https://www.google.com/recaptcha/api.js?render=6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
+      async
+      defer
+    ></script> -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body class="bg-gray-100">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KP95MR4R"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KP95MR4R"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-  <header class="bg-gradient-to-r from-orange-600 to-orange-400 text-white py-12 relative" style="height: 500px;">
-  <div class="absolute inset-0">
-    <img src="./img/header.webp" alt="Minibagr" class="object-cover w-full h-full opacity-30">
-  </div>
-  <div class="max-w-5xl mx-auto flex flex-col items-center relative z-10 h-full justify-center text-center">
-    <!-- Hlavní text -->
-    <h1 class="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-lg">Půjčovna minibagru Kněževes u Rakovníka</h1>
-    <p class="text-lg md:text-xl font-medium text-white/90">Váš pomocník pro zemní práce kolem domu!</p>
+    <header
+      class="bg-gradient-to-r from-orange-600 to-orange-400 text-white py-12 relative"
+      style="height: 500px"
+    >
+      <div class="absolute inset-0">
+        <img
+          src="./img/header.webp"
+          alt="Minibagr"
+          class="object-cover w-full h-full opacity-30"
+        />
+      </div>
+      <div
+        class="max-w-5xl mx-auto flex flex-col items-center relative z-10 h-full justify-center text-center"
+      >
+        <!-- Hlavní text -->
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-lg">
+          Půjčovna minibagru Kněževes u Rakovníka
+        </h1>
+        <p class="text-lg md:text-xl font-medium text-white/90">
+          Váš pomocník pro zemní práce kolem domu!
+        </p>
 
-    <!-- Call-to-action tlačítko -->
-    <a href="tel:+420315559885" class="mt-6 bg-white text-orange-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition">
-      Zavolejte nám
-    </a>
-  </div>
-</header>
+        <!-- Call-to-action tlačítko -->
+        <a
+          href="tel:+420315559885"
+          class="mt-6 bg-white text-orange-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition"
+        >
+          Zavolejte nám
+        </a>
+      </div>
+    </header>
 
+    <!-- Úvodní carousel -->
+    <section class="text-center my-12">
+      <div class="carousel">
+        <img
+          src="./img/car_0.webp"
+          alt="Mimoosé kopání"
+          class="rounded-lg shadow-lg"
+        />
+        <img
+          src="./img/car_1.webp"
+          alt="Mimoosé kopání"
+          class="rounded-lg shadow-lg"
+        />
+        <img
+          src="./img/car_2.webp"
+          alt="Radlička pro stabilizaci"
+          class="rounded-lg shadow-lg"
+        />
+        <img
+          src="./img/car_3.webp"
+          alt="Ovládací panel"
+          class="rounded-lg shadow-lg"
+        />
+        <img
+          src="./img/car_4.webp"
+          alt="Doprava"
+          class="rounded-lg shadow-lg"
+        />
+      </div>
+      <p class="mt-4 text-lg">
+        Kompaktní minibagr pro domácí výkopové práce či terénní úpravy. Projede
+        úzkými otvory o šířce 80 cm, a je také vybaven mimoosím kopáním.
+      </p>
+    </section>
 
-  <!-- Úvodní carousel -->
-  <section class="text-center my-12">
-    <div class="carousel">
-      <img src="./img/car_0.webp" alt="Mimoosé kopání" class="rounded-lg shadow-lg">
-      <img src="./img/car_1.webp" alt="Mimoosé kopání" class="rounded-lg shadow-lg">
-      <img src="./img/car_2.webp" alt="Radlička pro stabilizaci" class="rounded-lg shadow-lg">
-      <img src="./img/car_3.webp" alt="Ovládací panel" class="rounded-lg shadow-lg">
-      <img src="./img/car_4.webp" alt="Doprava" class="rounded-lg shadow-lg">
-    </div>
-    <p class="mt-4 text-lg">Kompaktní minibagr pro domácí výkopové práce či terénní úpravy. Projede úzkými otvory o šířce 80 cm, a je také vybaven mimoosím kopáním.</p>
-  </section>
-
-  <!-- Příslušenství -->
-  <section id="prislusenstvi" class="bg-white py-8">
-    <div class="max-w-5xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">Příslušenství</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center">
-        <div class="text-center">
-          <img src="./img/lzice_38.webp" alt="Lžíce 38 cm" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Lžíce 38 cm</p>
+    <!-- Příslušenství -->
+    <section id="prislusenstvi" class="bg-white py-8">
+      <div class="max-w-5xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">
+          Příslušenství
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center"
+        >
+          <div class="text-center">
+            <img
+              src="./img/lzice_38.webp"
+              alt="Lžíce 38 cm"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Lžíce 38 cm</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="./img/vrtak_20.webp"
+              alt="Vrták 20 cm"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Vrták s průměrem 20 cm</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="img/kleste.webp"
+              alt="Kleště"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Kleště</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="./img/lzice_20.webp"
+              alt="Lžíce 20 cm"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Lžíce 20 cm</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="./img/svahovka_80h.webp"
+              alt="Hydraulická svahovka 80 cm"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Hydraulická svahovka 80 cm</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="img/trn.webp"
+              alt="Rozrývací trn"
+              class="mx-auto mb-4 rounded-lg shadow-lg"
+            />
+            <p class="text-lg font-semibold">Rozrývací trn</p>
+          </div>
         </div>
-        <div class="text-center">
-          <img src="./img/vrtak_20.webp" alt="Vrták 20 cm" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Vrták s průměrem 20 cm</p>
-        </div>
-        <div class="text-center">
-          <img src="img/kleste.webp" alt="Kleště" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Kleště</p>
-        </div>
-        <div class="text-center">
-          <img src="./img/lzice_20.webp" alt="Lžíce 20 cm" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Lžíce 20 cm</p>
-        </div>
-        <div class="text-center">
-          <img src="./img/svahovka_80h.webp" alt="Hydraulická svahovka 80 cm" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Hydraulická svahovka 80 cm</p>
-        </div>
-        <div class="text-center">
-          <img src="img/trn.webp" alt="Rozrývací trn" class="mx-auto mb-4 rounded-lg shadow-lg">
-          <p class="text-lg font-semibold">Rozrývací trn</p>
+        <div class="text-center mx-auto">
+          <p class="text-lg pt-6 font-semibold text-orange-700">
+            Veškeré příslušenství je v ceně půjčovného!
+          </p>
         </div>
       </div>
-      <div class="text-center mx-auto">
-        <p class="text-lg pt-6 font-semibold text-orange-700">Veškeré příslušenství je v ceně půjčovného!</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Ceník -->
-  <section id="cenik" class="bg-orange-100 py-8">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-4">Ceník</h2>
-      <p class="text-lg mb-4">Cena půjčovného závisí na délce pronájmu</p>
-      <div class="text-xl font-semibold">
-        <p>1-4 dny: 1 600 Kč / den</p>
-        <p>5-30 dní: 1 400 Kč / den</p>
-        <p>31 a více dní: 1 000 Kč / den</p>
+    <!-- Ceník -->
+    <section id="cenik" class="bg-orange-100 py-8">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">Ceník</h2>
+        <p class="text-lg mb-4">Cena půjčovného závisí na délce pronájmu</p>
+        <div class="text-xl font-semibold">
+          <p>1-4 dny: 1 600 Kč / den</p>
+          <p>5-30 dní: 1 400 Kč / den</p>
+          <p>31 a více dní: 1 000 Kč / den</p>
+        </div>
+        <p class="text-lg mt-4 font-semibold">Vratná kauce: 10 000 Kč</p>
+        <p class="text-lg mt-4 font-semibold">Doprava: 15 Kč / km</p>
+        <p class="text-lg mt-4">
+          Případně si můžete minibagr odvést sami za poplatek
+          <span class="font-semibold">500 Kč</span>, ale potřebujete auto, které
+          utáhne alespoň 1200 kg.
+        </p>
       </div>
-      <p class="text-lg mt-4 font-semibold">Vratná kauce: 10 000 Kč</p>
-      <p class="text-lg mt-4 font-semibold">Doprava: 15 Kč / km</p>
-      <p class="text-lg mt-4">Případně si můžete minibagr odvést sami za poplatek <span class="font-semibold">500 Kč</span>, ale potřebujete auto, které utáhne alespoň 1200 kg.</p>
-    </div>
-  </section>
+    </section>
 
-  <!-- Rezervace -->
-  <section id="rezervace" class="bg-white py-8">
-    <div class="max-w-5xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">Jak rezervovat?</h2>
-      <p class="text-center text-lg mb-6">Rezervace minibagru je jednoduchá! Kontaktujte nás přes zprávu na sociálních sítích nebo zavolejte.</p>
-      <div class="text-center">
-        <a href="tel:+420315559885" class="bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition">Zavolejte nám</a>
-        <p class="mt-4">nebo nám napište na e-mail: <a href="mailto:info@pujcmibagr.cz" class="text-orange-400 hover:underline">info@pujcmibagr.cz</a></p>
+    <!-- Rezervace -->
+    <section id="rezervace" class="bg-white py-8">
+      <div class="max-w-5xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">
+          Jak rezervovat?
+        </h2>
+        <p class="text-center text-lg mb-6 max-w-2xl mx-auto">
+          Rezervace minibagru je jednoduchá! Vyplňte následující formulář nebo
+          nám zavolejte na číslo
+          <a href="tel:+420315559885" class="text-orange-400 hover:underline"
+            >+420 315 559 885</a
+          >.
+        </p>
+        <form id="rezervacni-formular" class="mt-8 max-w-2xl mx-auto">
+          <div class="columns-2">
+            <div>
+              <label
+                for="jmeno"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >Vaše jméno</label
+              >
+              <input
+                type="text"
+                id="jmeno"
+                name="jmeno"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+            <div>
+              <label
+                for="telefon"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >Telefon</label
+              >
+              <input
+                type="tel"
+                id="telefon"
+                name="telefon"
+                pattern="(\+420|0)?[1-9][0-9]{8}"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+          </div>
+          <div class="columns-2 mt-4">
+            <div>
+              <label
+                for="email"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >E-mail</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+            <div>
+              <label
+                for="adresa"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >Adresa</label
+              >
+              <input
+                type="text"
+                id="adresa"
+                name="adresa"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+          </div>
+          <div class="columns-2 mt-4">
+            <div>
+              <label
+                for="datum"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >Datum pronájmu</label
+              >
+              <input
+                type="date"
+                id="datum"
+                name="datum"
+                required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+            <div>
+              <label
+                for="doba"
+                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
+                >Doba pronájmu</label
+              >
+              <input
+                type="number"
+                id="doba"
+                name="doba"
+                required
+                min="1"
+                max="60"
+                pattern="\d+"
+                step="1"
+                value="1"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+              />
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="block text-md font-medium">Doprava</div>
+            <input type="checkbox" id="doprava" name="doprava" class="mr-1" />
+            <label for="doprava" class="">Ano, potřebuji dopravu</label>
+          </div>
+          <div>
+            <div class="block text-md font-medium">Příslušenství</div>
+            <input
+              type="checkbox"
+              id="lzice"
+              name="prislusenstvi"
+              value="lzice"
+              class="mr-1"
+            />
+            <label for="lzice" class="mr-4">Lžíce 38 cm</label>
+            <input
+              type="checkbox"
+              id="vrtak"
+              name="prislusenstvi"
+              value="vrtak"
+              class="mr-1"
+            />
+            <label for="vrtak" class="mr-4">Vrták 20 cm</label>
+            <input
+              type="checkbox"
+              id="kleste"
+              name="prislusenstvi"
+              value="kleste"
+              class="mr-1"
+            />
+            <label for="kleste" class="mr-4">Kleště</label>
+          </div>
+          <div class="mt-4">
+            <label for="poznamka" class="block text-md font-medium"
+              >Poznámka</label
+            >
+            <textarea
+              id="poznamka"
+              name="poznamka"
+              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+            ></textarea>
+          </div>
+          <div class="text-center">
+            <div
+              id="recaptcha"
+              class="g-recaptcha"
+              data-sitekey="6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
+              data-callback="onSubmit"
+              data-size="invisible"
+            ></div>
+            <button
+              class="bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition mt-6"
+              type="submit"
+            >
+              Odeslat
+            </button>
+          </div>
+        </form>
+        <div id="potvrzeni" class="mt-6 hidden">
+          <p class="text-center mt-6 text-lg">
+            <span class="text-orange-400 font-semibold text-xl">A je to.</span
+            ><br />Vaše rezervace
+            <b class="font-semibold">bude potvrzena</b> telefonicky nebo
+            e-mailem.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
-<!-- Patička -->
-  <footer id="kontakt" class="bg-gray-900 text-white py-8">
-    <div class="max-w-5xl mx-auto text-center">
-      <h3 class="text-2xl font-bold mb-4">Kontakt</h3>
-        <p class="text-lg">Tel.: <a href="tel:+420315559885" class="hover:underline">+420 315 559 885</a></p>
-        <p class="text-lg">SMS, WhatsApp: <a class="hover:underline" href="tel:+420606613709">+420 606 613 709</a></p>
-        <p class="text-lg">E-mail: <a href="mailto:info@pujcmibagr.cz" class="hover:underline">info@pujcmibagr.cz</a></p>
-      <div class="mt-6">
-        <p class="text-xl font-semibold py-2">Sledujte nás na sociálních sítích</p>
-        <a href="https://www.facebook.com/profile.php?id=61566134102378" class="text-orange-400 hover:underline mx-2" target="_blank">Facebook</a>
-        <a href="https://www.instagram.com/pujcmibagr" class="text-orange-400 hover:underline mx-2" target="_blank">Instagram</a>
+    </section>
+    <!-- Patička -->
+    <footer id="kontakt" class="bg-gray-900 text-white py-8">
+      <div class="max-w-5xl mx-auto text-center">
+        <h3 class="text-2xl font-bold mb-4">Kontakt</h3>
+        <p class="text-lg">
+          Tel.:
+          <a href="tel:+420315559885" class="hover:underline"
+            >+420 315 559 885</a
+          >
+        </p>
+        <p class="text-lg">
+          SMS, WhatsApp:
+          <a class="hover:underline" href="tel:+420606613709"
+            >+420 606 613 709</a
+          >
+        </p>
+        <p class="text-lg">
+          E-mail:
+          <a href="mailto:info@pujcmibagr.cz" class="hover:underline"
+            >info@pujcmibagr.cz</a
+          >
+        </p>
+        <div class="mt-6">
+          <p class="text-xl font-semibold py-2">
+            Sledujte nás na sociálních sítích
+          </p>
+          <a
+            href="https://www.facebook.com/profile.php?id=61566134102378"
+            class="text-orange-400 hover:underline mx-2"
+            target="_blank"
+            >Facebook</a
+          >
+          <a
+            href="https://www.instagram.com/pujcmibagr"
+            class="text-orange-400 hover:underline mx-2"
+            target="_blank"
+            >Instagram</a
+          >
+        </div>
+        <p class="mt-6 text-gray-400">&copy; 2025 – pujcmibagr.cz</p>
       </div>
-      <p class="mt-6 text-gray-400">&copy; 2025 – pujcmibagr.cz</p>
-    </div>
-  </footer>
-</body>
+    </footer>
+    <script>
+      const dateInput = document.getElementById("datum");
+      dateInput.min = new Date().toISOString().split("T")[0];
+
+      let formDataToSend = {};
+
+      const form = document.getElementById("rezervacni-formular");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        formDataToSend = Object.fromEntries(formData);
+
+        console.log(formDataToSend);
+        grecaptcha.execute();
+        form
+          .querySelectorAll("input, select, textarea, button")
+          .forEach((field) => {
+            field.disabled = true;
+          });
+      });
+
+      async function onSubmit(token) {
+        event.preventDefault();
+        console.log("co?", token, formDataToSend);
+        formDataToSend["g-recaptcha-response"] = token;
+        const data = formDataToSend;
+        // try {
+        //   const respons = await fetch(
+        //     "https://hook.eu2.make.com/rw4a1vvutigc444ysq43cgyr5nd3mt9i",
+        //     {
+        //       method: "POST",
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //       },
+        //       body: JSON.stringify(data),
+        //     }
+        //   );
+        //   console.log(respons);
+        //   form.remove();
+        //   document.getElementById("potvrzeni").classList.remove("hidden");
+        //   // form.reset();
+        // } catch (error) {
+        //   console.error(error);
+        // }
+      }
+    </script>
+  </body>
 </html>
