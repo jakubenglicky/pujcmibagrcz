@@ -324,37 +324,96 @@
               />
             </div>
           </div>
-          <div class="mt-4">
-            <div class="block text-md font-medium">Doprava</div>
-            <input type="checkbox" id="doprava" name="doprava" class="mr-1" />
-            <label for="doprava" class="">Ano, potřebuji dopravu</label>
-          </div>
-          <div>
-            <div class="block text-md font-medium">Příslušenství</div>
-            <input
-              type="checkbox"
-              id="lzice"
-              name="prislusenstvi"
-              value="lzice"
-              class="mr-1"
-            />
-            <label for="lzice" class="mr-4">Lžíce 38 cm</label>
-            <input
-              type="checkbox"
-              id="vrtak"
-              name="prislusenstvi"
-              value="vrtak"
-              class="mr-1"
-            />
-            <label for="vrtak" class="mr-4">Vrták 20 cm</label>
-            <input
-              type="checkbox"
-              id="kleste"
-              name="prislusenstvi"
-              value="kleste"
-              class="mr-1"
-            />
-            <label for="kleste" class="mr-4">Kleště</label>
+          <div class="flex mt-4">
+            <div class="grow">
+              <div class="block text-md font-medium">Doprava</div>
+              <div>
+                <input
+                  type="radio"
+                  id="doprava-ano"
+                  name="doprava"
+                  class="mr-1"
+                  value="true"
+                  checked
+                />
+                <label for="doprava-ano" class="">Ano, potřebuji dopravu</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="doprava-ne"
+                  name="doprava"
+                  class="mr-1"
+                  value="false"
+                />
+                <label for="doprava-ne" class=""
+                  >Ne, dopravu si zajistním sám</label
+                >
+              </div>
+            </div>
+            <div class="grow">
+              <div class="block text-md font-medium">Příslušenství</div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="lzice"
+                  name="prislusenstvi"
+                  value="lzice"
+                  class="mr-1"
+                />
+                <label for="lzice" class="mr-4">Lžíce 38 cm</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="vrtak"
+                  name="prislusenstvi"
+                  value="vrtak"
+                  class="mr-1"
+                />
+                <label for="vrtak" class="mr-4">Vrták 20 cm</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="kleste"
+                  name="prislusenstvi"
+                  value="kleste"
+                  class="mr-1"
+                />
+                <label for="kleste" class="mr-4">Kleště</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="lzice-20"
+                  name="prislusenstvi"
+                  value="lzice-20"
+                  class="mr-1"
+                />
+                <label for="lzice-20" class="mr-4">Lžíce 20 cm</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="svahovka"
+                  name="prislusenstvi"
+                  value="svahovka"
+                  class="mr-1"
+                />
+                <label for="svahovka" class="mr-4">Svahovka 80 cm</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="trn"
+                  name="prislusenstvi"
+                  value="trn"
+                  class="mr-1"
+                />
+                <label for="trn" class="mr-4">Rozrývací trn</label>
+              </div>
+            </div>
           </div>
           <div class="mt-4">
             <label for="poznamka" class="block text-md font-medium"
@@ -446,6 +505,13 @@
         e.preventDefault();
         const formData = new FormData(form);
         formDataToSend = Object.fromEntries(formData);
+        let prislusenstvi = "";
+        form.querySelectorAll("input[type=checkbox]").forEach((checkbox) => {
+          if (checkbox.name === "prislusenstvi" && checkbox.checked) {
+            prislusenstvi += `${checkbox.value}, `;
+          }
+        });
+        formDataToSend.prislusenstvi = prislusenstvi.slice(0, -2);
 
         console.log(formDataToSend);
         grecaptcha.execute();
@@ -458,27 +524,24 @@
 
       async function onSubmit(token) {
         event.preventDefault();
-        console.log("co?", token, formDataToSend);
         formDataToSend["g-recaptcha-response"] = token;
         const data = formDataToSend;
-        // try {
-        //   const respons = await fetch(
-        //     "https://hook.eu2.make.com/rw4a1vvutigc444ysq43cgyr5nd3mt9i",
-        //     {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       body: JSON.stringify(data),
-        //     }
-        //   );
-        //   console.log(respons);
-        //   form.remove();
-        //   document.getElementById("potvrzeni").classList.remove("hidden");
-        //   // form.reset();
-        // } catch (error) {
-        //   console.error(error);
-        // }
+        try {
+          const respons = await fetch(
+            "https://hook.eu2.make.com/rw4a1vvutigc444ysq43cgyr5nd3mt9i",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          );
+          form.remove();
+          document.getElementById("potvrzeni").classList.remove("hidden");
+        } catch (error) {
+          console.error(error);
+        }
       }
     </script>
   </body>
