@@ -221,13 +221,41 @@
           Jak rezervovat?
         </h2>
         <p class="text-center text-lg mb-6 max-w-2xl mx-auto">
-          Rezervace minibagru je jednoduchá! Vyplňte následující <span class="font-semibold">poptávkový formulář</span>
+          Rezervace minibagru je jednoduchá! Vyplňte následující
+          <span class="font-semibold">poptávkový formulář</span>
           nebo nám zavolejte na číslo
           <a href="tel:+420315559885" class="text-orange-400 hover:underline"
             >+420 315 559 885</a
           >.
         </p>
-        <form id="rezervacni-formular" class="mt-8 max-w-2xl mx-auto">
+        <form
+          id="rezervacni-formular"
+          class="mt-8 max-w-2xl mx-auto relative p-2"
+        >
+          <div
+            class="loading-overlay hidden absolute w-full h-full top-0 left-0 bg-gray-400 rounded-md bg-opacity-50 flex items-center justify-center"
+          >
+            <svg
+              class="mr-3 -ml-1 size-10 animate-spin text-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </div>
           <div class="columns-2">
             <div>
               <label
@@ -426,14 +454,28 @@
             ></textarea>
           </div>
           <div class="text-center">
-            <p class="text-gray-600">Odesláním formuláře souhlasíte se zpracováním osobních údajů za účelem vytvoření poptávky.</p>
+            <p class="text-gray-600">
+              Odesláním formuláře souhlasíte se zpracováním osobních údajů za
+              účelem vytvoření poptávky.
+            </p>
             <div
               id="recaptcha"
               class="g-recaptcha"
               data-sitekey="6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
               data-callback="onSubmit"
               data-size="invisible"
+              data-error-callback="onErrorCaptcha"
             ></div>
+            <div class="error-capctha hidden">
+              <p class="text-red-500">
+                Chyba při ověření reCAPTCHA, zkuste odelsnání později.
+              </p>
+            </div>
+            <div class="error-send hidden">
+              <p class="text-red-500">
+                Chyba při odesílání formuláře, zkuste to prosím později.
+              </p>
+            </div>
             <button
               class="bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition mt-6"
               type="submit"
@@ -514,17 +556,16 @@
         });
         formDataToSend.prislusenstvi = prislusenstvi.slice(0, -2);
 
-        console.log(formDataToSend);
         grecaptcha.execute();
-        form
-          .querySelectorAll("input, select, textarea, button")
-          .forEach((field) => {
-            field.disabled = true;
-          });
+        form.querySelector("button").disabled = true;
+        form.querySelector(".error-capctha").classList.add("hidden");
+        form.querySelector(".error-send").classList.add("hidden");
       });
 
       async function onSubmit(token) {
         event.preventDefault();
+        form.querySelector(".loading-overlay").classList.remove("hidden");
+        form.classList.add("opacity-80");
         formDataToSend["g-recaptcha-response"] = token;
         const data = formDataToSend;
         try {
@@ -542,7 +583,18 @@
           document.getElementById("potvrzeni").classList.remove("hidden");
         } catch (error) {
           console.error(error);
+          form.querySelector(".loading-overlay").classList.add("hidden");
+          form.classList.remove("opacity-80");
+          form.querySelector("button").disabled = false;
+          form.querySelector(".error-send").classList.remove("hidden");
         }
+      }
+
+      function onErrorCaptcha() {
+        form.querySelector(".loading-overlay").classList.add("hidden");
+        form.classList.remove("opacity-80");
+        form.querySelector("button").disabled = false;
+        form.querySelector(".error-capctha").classList.remove("hidden");
       }
     </script>
   </body>
