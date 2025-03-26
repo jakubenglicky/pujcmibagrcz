@@ -328,7 +328,7 @@
                 type="date"
                 id="datum"
                 name="datum"
-                required
+                
                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
               />
             </div>
@@ -569,7 +569,7 @@
         formDataToSend["g-recaptcha-response"] = token;
         const data = formDataToSend;
         try {
-          const respons = await fetch(
+          const response = await fetch(
             "https://hook.eu2.make.com/rw4a1vvutigc444ysq43cgyr5nd3mt9i",
             {
               method: "POST",
@@ -579,13 +579,19 @@
               body: JSON.stringify(data),
             }
           );
+
+          const respDdata = await response.json();
+          if (respDdata.status !== "ok") {
+            throw new Error("Chyba při odesílání formuláře");
+          }
+
           form.remove();
           document.getElementById("potvrzeni").classList.remove("hidden");
         } catch (error) {
           console.error(error);
           form.querySelector(".loading-overlay").classList.add("hidden");
           form.classList.remove("opacity-80");
-          form.querySelector("button").disabled = false;
+          form.querySelector("button").removeAttribute("disabled");
           form.querySelector(".error-send").classList.remove("hidden");
         }
       }
@@ -593,7 +599,7 @@
       function onErrorCaptcha() {
         form.querySelector(".loading-overlay").classList.add("hidden");
         form.classList.remove("opacity-80");
-        form.querySelector("button").disabled = false;
+        form.querySelector("button").removeAttribute("disabled");
         form.querySelector(".error-capctha").classList.remove("hidden");
       }
     </script>
