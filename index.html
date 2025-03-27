@@ -328,7 +328,7 @@
                 type="date"
                 id="datum"
                 name="datum"
-                
+                required
                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
               />
             </div>
@@ -593,6 +593,7 @@
           form.classList.remove("opacity-80");
           form.querySelector("button").removeAttribute("disabled");
           form.querySelector(".error-send").classList.remove("hidden");
+          grecaptcha.reset();
         }
       }
 
