@@ -232,7 +232,7 @@
           <a
             id="showCalendar"
             class="inline-block bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition my-4 duration-300 cursor-pointer"
-            >Předpokládaná obsazenost</a
+            >Zkontrolovat obsazenost</a
           >
         </div>
         <div
@@ -564,9 +564,9 @@
         calendar.classList.toggle("h-0");
         calendar.classList.toggle("h-[500px]");
         showCalendar.textContent =
-          showCalendar.textContent === "Předpokládaná obsazenost"
+          showCalendar.textContent === "Zkontrolovat obsazenost"
             ? "Skrýt kalendář"
-            : "Předpokládaná obsazenost";
+            : "Zkontrolovat obsazenost";
       });
 
       const dateInput = document.getElementById("datum");
