@@ -308,7 +308,7 @@
               />
             </div>
           </div>
-          <div class="columns-2 mt-4">
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
                 for="email"
@@ -323,7 +323,7 @@
                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
               />
             </div>
-            <div>
+            <div class="relative">
               <label
                 for="adresa"
                 class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
@@ -334,8 +334,14 @@
                 id="adresa"
                 name="adresa"
                 required
+                autocomplete="off"
+                placeholder="Začněte psát adresu..."
                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
               />
+              <div id="adresa-suggestions" class="hidden absolute left-0 right-0 z-50 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto"></div>
+              <div id="vzdalenost-info" class="hidden mt-1 text-sm text-green-600">
+                <span id="vzdalenost-text"></span>
+              </div>
             </div>
           </div>
           <div class="columns-2 mt-4">
@@ -474,6 +480,17 @@
               class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
             ></textarea>
           </div>
+          <div id="cena-vypocet" class="mt-6 mb-6 p-4 bg-orange-50 border-2 border-orange-200 rounded-lg">
+            <div class="text-center">
+              <p class="text-sm text-gray-600 mb-1">Odhadovaná cena pronájmu</p>
+              <p class="text-3xl font-bold text-orange-600">
+                <span id="cena-hodnota">1 600</span> Kč
+              </p>
+              <p class="text-xs text-gray-500 mt-1">
+                <span id="cena-detail">1 den × 1 600 Kč/den</span>
+              </p>
+            </div>
+          </div>
           <div class="text-center">
             <p class="text-gray-600">
               Odesláním formuláře souhlasíte se zpracováním osobních údajů za
@@ -571,6 +588,328 @@
 
       const dateInput = document.getElementById("datum");
       dateInput.min = new Date().toISOString().split("T")[0];
+
+      // API klíč pro Mapy.cz
+      const API_KEY = 'uNrP6tR7uZmOxyo3V5_-ckC4wDhBczZOLBi8A92maRQ';
+      let KNEZEVES_COORDS = [13.9239, 50.1867]; // [longitude, latitude] Kněževes u Rakovníka - bude aktualizováno
+
+      // Automaticky získat správné souřadnice Kněževsi při načtení stránky
+      async function inicializujKnezeves() {
+        try {
+          const coords = await ziskejSouradnice('Kněževes, 27001, Česko');
+          if (coords) {
+            KNEZEVES_COORDS = coords;
+            console.log('✓ Souřadnice Kněževsi aktualizovány:', KNEZEVES_COORDS);
+          }
+        } catch (error) {
+          console.error('Chyba při inicializaci Kněževsi:', error);
+        }
+      }
+
+      // Globální proměnné
+      let vzdalenostKm = 0;
+      let vybranaDoprava = true; // defaultně ano
+
+      // Kalkulačka ceny pronájmu
+      const dobaInput = document.getElementById("doba");
+      const cenaHodnota = document.getElementById("cena-hodnota");
+      const cenaDetail = document.getElementById("cena-detail");
+      const adresaInput = document.getElementById("adresa");
+      const adresaSuggestions = document.getElementById("adresa-suggestions");
+
+      function vypocitejCenu(dny, km = vzdalenostKm, doprava = vybranaDoprava) {
+        let cenaZaDen;
+
+        if (dny >= 1 && dny <= 4) {
+          cenaZaDen = 1600;
+        } else if (dny >= 5 && dny <= 30) {
+          cenaZaDen = 1400;
+        } else if (dny >= 31) {
+          cenaZaDen = 1000;
+        } else {
+          cenaZaDen = 1600; // defaultní cena
+        }
+
+        const cenaPronajmu = dny * cenaZaDen;
+        let cenaDopravy = 0;
+
+        // Debug - můžete odstranit po testování
+        console.log('Výpočet ceny:', { dny, km, doprava, cenaPronajmu });
+
+        if (doprava && km > 0) {
+          // 4 cesty: dovoz tam + zpět prázdní + odvoz tam + zpět s bagrem
+          // km je už zaokrouhleno na celá čísla
+          const celkoveKm = km * 4;
+          cenaDopravy = celkoveKm * 15; // 15 Kč/km
+        } else if (!doprava) {
+          cenaDopravy = 500; // Svépomocí
+        }
+
+        const celkovaCena = cenaPronajmu + cenaDopravy;
+
+        // Aktualizace zobrazení
+        cenaHodnota.textContent = celkovaCena.toLocaleString('cs-CZ');
+
+        let detail = `${dny} ${dny === 1 ? 'den' : dny >= 2 && dny <= 4 ? 'dny' : 'dní'} × ${cenaZaDen.toLocaleString('cs-CZ')} Kč/den`;
+
+        if (doprava && km > 0) {
+          const celkoveKm = km * 4;
+          detail += ` + doprava ${celkoveKm} km (4× ${km} km = ${cenaDopravy.toLocaleString('cs-CZ')} Kč)`;
+        } else if (!doprava) {
+          detail += ` + svépomocí (500 Kč)`;
+        }
+
+        cenaDetail.textContent = detail;
+      }
+
+      // Event listener pro změnu doby pronájmu
+      dobaInput.addEventListener("input", (e) => {
+        const dny = parseInt(e.target.value) || 1;
+        vypocitejCenu(dny);
+      });
+
+      // Event listenery pro změnu dopravy
+      document.querySelectorAll('input[name="doprava"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          vybranaDoprava = e.target.value === 'true';
+          const dny = parseInt(dobaInput.value) || 1;
+          vypocitejCenu(dny);
+        });
+      });
+
+      // Napovídání adres - debounce funkce
+      let suggestTimeout;
+      adresaInput.addEventListener("input", async (e) => {
+        const query = e.target.value.trim();
+
+        clearTimeout(suggestTimeout);
+
+        if (query.length < 3) {
+          adresaSuggestions.classList.add('hidden');
+          return;
+        }
+
+        suggestTimeout = setTimeout(async () => {
+          try {
+            const response = await fetch(
+              `https://api.mapy.cz/v1/suggest?lang=cs&limit=5&type=regional.address&type=regional.municipality&query=${encodeURIComponent(query)}`,
+              {
+                headers: {
+                  'X-Mapy-Api-Key': API_KEY
+                }
+              }
+            );
+
+            const data = await response.json();
+            console.log('Suggest API response:', data);
+
+            if (data.items && data.items.length > 0) {
+              console.log('Počet návrhů:', data.items.length);
+              adresaSuggestions.innerHTML = data.items.map(item => {
+                console.log('Item s všemi poli:', item);
+
+                // Sestavit upřesňující informace
+                let detaily = [];
+
+                // Přidat lokaci/region pokud existuje (nejdůležitější pro rozlišení)
+                if (item.location && typeof item.location === 'string') {
+                  detaily.push(item.location);
+                }
+
+                // Přidat label pouze pokud není location
+                if (item.label && !item.location) {
+                  detaily.push(item.label);
+                }
+
+                // Zkusit získat okres z regionalStructure
+                if (item.regionalStructure && Array.isArray(item.regionalStructure)) {
+                  const okres = item.regionalStructure.find(r => r.type === 'regional.district');
+                  if (okres && okres.name && !detaily.some(d => d.includes(okres.name))) {
+                    detaily.unshift(`okres ${okres.name}`); // Přidat na začátek
+                  }
+                }
+
+                const detailText = detaily.length > 0 ? detaily.join(' • ') : '';
+
+                // Uložit celý item jako JSON pro pozdější použití
+                return `<div class="suggestion-item p-2 hover:bg-orange-50 cursor-pointer border-b last:border-b-0" data-item='${JSON.stringify(item)}'>
+                  <div class="font-semibold text-sm">${item.name}</div>
+                  ${detailText ? `<div class="text-xs text-gray-500">${detailText}</div>` : ''}
+                </div>`;
+              }).join('');
+              adresaSuggestions.classList.remove('hidden');
+            } else {
+              adresaSuggestions.classList.add('hidden');
+            }
+          } catch (error) {
+            console.error('Chyba při načítání návrhů:', error);
+          }
+        }, 300);
+      });
+
+      // Kliknutí na návrh adresy
+      adresaSuggestions.addEventListener('click', async (e) => {
+        const suggestionItem = e.target.closest('.suggestion-item');
+        if (!suggestionItem) return;
+
+        const item = JSON.parse(suggestionItem.dataset.item);
+        console.log('Vybraný item:', item);
+
+        adresaInput.value = item.name;
+        adresaSuggestions.classList.add('hidden');
+
+        // Zobrazit loading
+        const vzdalenostInfo = document.getElementById('vzdalenost-info');
+        const vzdalenostText = document.getElementById('vzdalenost-text');
+        vzdalenostInfo.classList.remove('hidden');
+        vzdalenostInfo.classList.remove('text-orange-600');
+        vzdalenostInfo.classList.add('text-green-600');
+        vzdalenostText.textContent = 'Počítám vzdálenost...';
+
+        // Zkusit získat souřadnice z různých možných polí
+        let coordinates = null;
+
+        // Možnost 1: position field
+        if (item.position && item.position.lon && item.position.lat) {
+          coordinates = [item.position.lon, item.position.lat];
+          console.log('Souřadnice z position:', coordinates);
+        }
+        // Možnost 2: location je objekt se souřadnicemi
+        else if (item.location && typeof item.location === 'object' && item.location.lon && item.location.lat) {
+          coordinates = [item.location.lon, item.location.lat];
+          console.log('Souřadnice z location:', coordinates);
+        }
+        // Možnost 3: coords field
+        else if (item.coords && item.coords.lon && item.coords.lat) {
+          coordinates = [item.coords.lon, item.coords.lat];
+          console.log('Souřadnice z coords:', coordinates);
+        }
+        // Možnost 4: musíme zavolat Geocode API
+        else {
+          console.log('Souřadnice nejsou v suggest response, volám Geocode API...');
+          coordinates = await ziskejSouradnice(item.name);
+        }
+
+        // Vypočítat vzdálenost
+        if (coordinates && coordinates.length === 2) {
+          await vypocitejVzdalenost(coordinates);
+        } else {
+          console.error('Nepodařilo se získat souřadnice');
+          vzdalenostText.textContent = '⚠ Nepodařilo se získat souřadnice';
+          vzdalenostInfo.classList.remove('text-green-600');
+          vzdalenostInfo.classList.add('text-orange-600');
+        }
+      });
+
+      // Funkce pro získání souřadnic pomocí Geocode API
+      async function ziskejSouradnice(adresa) {
+        try {
+          const response = await fetch(
+            `https://api.mapy.cz/v1/geocode?query=${encodeURIComponent(adresa)}&lang=cs&limit=1`,
+            {
+              headers: {
+                'X-Mapy-Api-Key': API_KEY
+              }
+            }
+          );
+
+          const data = await response.json();
+          console.log('Geocode API response:', data);
+
+          if (data.items && data.items.length > 0) {
+            const item = data.items[0];
+            // Zkusit různé možné formáty
+            if (item.position && item.position.lon && item.position.lat) {
+              return [item.position.lon, item.position.lat];
+            } else if (item.location && typeof item.location === 'object' && item.location.lon && item.location.lat) {
+              return [item.location.lon, item.location.lat];
+            }
+          }
+
+          return null;
+        } catch (error) {
+          console.error('Chyba při volání Geocode API:', error);
+          return null;
+        }
+      }
+
+      // Skrytí návrhů při kliknutí mimo
+      document.addEventListener('click', (e) => {
+        if (!adresaInput.contains(e.target) && !adresaSuggestions.contains(e.target)) {
+          adresaSuggestions.classList.add('hidden');
+        }
+      });
+
+      // Výpočet vzdálenosti
+      async function vypocitejVzdalenost(ciloveKoordinaty) {
+        const vzdalenostInfo = document.getElementById('vzdalenost-info');
+        const vzdalenostText = document.getElementById('vzdalenost-text');
+
+        try {
+          console.log('Volám routing API s koordináty:', {
+            start: KNEZEVES_COORDS,
+            end: ciloveKoordinaty
+          });
+
+          const url = new URL('https://api.mapy.cz/v1/routing/route');
+          url.searchParams.append('start', `${KNEZEVES_COORDS[0]},${KNEZEVES_COORDS[1]}`);
+          url.searchParams.append('end', `${ciloveKoordinaty[0]},${ciloveKoordinaty[1]}`);
+          url.searchParams.append('routeType', 'car_fast');
+
+          console.log('URL:', url.toString());
+
+          const response = await fetch(url, {
+            headers: {
+              'X-Mapy-Api-Key': API_KEY
+            }
+          });
+
+          console.log('Response status:', response.status);
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API chyba:', errorText);
+            throw new Error(`API error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log('Response data:', data);
+
+          if (data.length !== undefined && data.length > 0) {
+            // Převod z metrů na kilometry a hned zaokrouhlení
+            vzdalenostKm = Math.round(data.length / 1000);
+
+            // Zobrazit vzdálenost
+            const celkemKm = vzdalenostKm * 4;
+            vzdalenostText.textContent = `✓ Celková doprava: ${celkemKm} km (4× ${vzdalenostKm} km)`;
+            vzdalenostInfo.classList.remove('text-orange-600');
+            vzdalenostInfo.classList.add('text-green-600');
+            vzdalenostInfo.classList.remove('hidden');
+
+            // Přepočítat cenu
+            const dny = parseInt(dobaInput.value) || 1;
+            vypocitejCenu(dny);
+          } else {
+            console.error('Neplatná odpověď API:', data);
+            vzdalenostText.textContent = '⚠ Nepodařilo se vypočítat vzdálenost';
+            vzdalenostInfo.classList.remove('text-green-600');
+            vzdalenostInfo.classList.add('text-orange-600');
+            vzdalenostInfo.classList.remove('hidden');
+          }
+        } catch (error) {
+          console.error('Chyba při výpočtu vzdálenosti:', error);
+          vzdalenostText.textContent = `⚠ Chyba: ${error.message}`;
+          vzdalenostInfo.classList.remove('text-green-600');
+          vzdalenostInfo.classList.add('text-orange-600');
+          vzdalenostInfo.classList.remove('hidden');
+        }
+      }
+
+      // Inicializace s defaultní hodnotou (1 den)
+      vypocitejCenu(1);
+
+      // Inicializace souřadnic Kněževsi
+      inicializujKnezeves();
 
       let formDataToSend = {};
 
