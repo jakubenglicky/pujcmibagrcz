@@ -82,6 +82,24 @@
       .flatpickr-day.nextMonthDay {
         visibility: hidden;
       }
+
+      /* Skrýt všechny radio buttony a checkboxy ve formuláři */
+      input[type="radio"],
+      input[type="checkbox"] {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border-width: 0 !important;
+        opacity: 0 !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+      }
     </style>
     <!-- <script
       src="https://www.google.com/recaptcha/api.js?render=6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
@@ -101,229 +119,437 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <header
-      class="bg-gradient-to-r from-orange-600 to-orange-400 text-white py-12 relative"
-      style="height: 500px"
-    >
+    <header class="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-500 to-orange-700" style="min-height: 600px">
+      <!-- Background Image with Overlay -->
       <div class="absolute inset-0">
         <img
           src="./img/header.webp"
           alt="Minibagr"
-          class="object-cover w-full h-full opacity-30"
+          class="object-cover w-full h-full"
         />
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-600/85 via-orange-500/80 to-orange-700/85"></div>
       </div>
-      <div
-        class="max-w-5xl mx-auto flex flex-col items-center relative z-10 h-full justify-center text-center"
-      >
-        <!-- Hlavní text -->
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-lg">
-          Půjčovna minibagru Kněževes u Rakovníka
-        </h1>
-        <p class="text-lg md:text-xl font-medium text-white/90">
-          Váš pomocník pro zemní práce kolem domu!
-        </p>
 
-        <!-- Call-to-action tlačítko -->
-        <a
-          href="/#rezervace"
-          class="mt-6 bg-white text-orange-600 font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-gray-100 transition"
-        >
-          Rezervovat
-        </a>
+      <!-- Content -->
+      <div class="relative z-10 max-w-6xl mx-auto px-4 py-20 md:py-28">
+        <div class="text-center">
+          <!-- Main Heading -->
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-tight">
+            Půjčovna<br class="hidden md:block" />
+            <span class="text-white drop-shadow-2xl">minibagru</span>
+          </h1>
+
+          <!-- Subheading -->
+          <p class="text-xl md:text-2xl text-white/95 mb-4 max-w-2xl mx-auto font-medium">
+            Váš spolehlivý pomocník pro zemní práce
+          </p>
+          <p class="text-lg text-white/80 mb-10 max-w-xl mx-auto">
+            Kompaktní minibagr pro výkopy, terénní úpravy a stavební práce kolem domu
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <a
+              href="/#rezervace"
+              class="bg-white text-orange-600 font-bold py-4 px-8 rounded-xl shadow-2xl hover:bg-gray-50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg"
+            >
+              📅 Rezervovat termín
+            </a>
+            <a
+              href="/#cenik"
+              class="bg-white/10 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-lg"
+            >
+              💰 Zobrazit ceník
+            </a>
+          </div>
+
+          <!-- Features -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div class="text-3xl mb-2">🚜</div>
+              <h3 class="font-bold text-white mb-1 text-lg">Kompaktní rozměry</h3>
+              <p class="text-white/80 text-sm">Projede otvorem 80 cm</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div class="text-3xl mb-2">🔧</div>
+              <h3 class="font-bold text-white mb-1 text-lg">Vše v ceně</h3>
+              <p class="text-white/80 text-sm">Příslušenství zdarma</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div class="text-3xl mb-2">🚚</div>
+              <h3 class="font-bold text-white mb-1 text-lg">Doprava</h3>
+              <p class="text-white/80 text-sm">Rozvezeme až k vám</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative bottom wave -->
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+          <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white"/>
+        </svg>
       </div>
     </header>
 
-    <!-- Úvodní carousel -->
-    <section class="text-center my-12">
-      <div class="carousel">
-        <img
-          src="./img/car_0.webp"
-          alt="Mimoosé kopání"
-          class="rounded-lg shadow-lg"
-        />
-        <img
-          src="./img/car_1.webp"
-          alt="Mimoosé kopání"
-          class="rounded-lg shadow-lg"
-        />
-        <img
-          src="./img/car_2.webp"
-          alt="Radlička pro stabilizaci"
-          class="rounded-lg shadow-lg"
-        />
-        <img
-          src="./img/car_3.webp"
-          alt="Ovládací panel"
-          class="rounded-lg shadow-lg"
-        />
-        <img
-          src="./img/car_4.webp"
-          alt="Doprava"
-          class="rounded-lg shadow-lg"
-        />
+    <!-- O minibagru & Galerie -->
+    <section class="bg-white py-16">
+      <div class="max-w-6xl mx-auto px-4">
+        <!-- Nadpis a popis -->
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4 text-gray-800">Náš minibagr</h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Kompaktní minibagr ideální pro domácí výkopové práce a terénní úpravy.
+            Projede úzkými otvory o šířce <span class="font-semibold text-orange-600">80 cm</span>
+            a je vybaven <span class="font-semibold text-orange-600">mimoosím kopáním</span>.
+          </p>
+        </div>
+
+        <!-- Fotogalerie - Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <img
+              src="./img/car_0.webp"
+              alt="Detail bagru"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <p class="text-white text-sm font-medium">Detail bagru</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <img
+              src="./img/car_1.webp"
+              alt="Mimoosé kopání"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <p class="text-white text-sm font-medium">Mimoosé kopání</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <img
+              src="./img/car_2.webp"
+              alt="Radlička pro stabilizaci"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <p class="text-white text-sm font-medium">Stabilizační radlička</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <img
+              src="./img/car_3.webp"
+              alt="Ovládací panel"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <p class="text-white text-sm font-medium">Ovládací panel</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <img
+              src="./img/car_4.webp"
+              alt="Doprava"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <p class="text-white text-sm font-medium">Doprava na místo</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Klíčové vlastnosti -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
+            <div class="text-4xl mb-3">📏</div>
+            <h3 class="font-bold text-gray-800 mb-2">Kompaktní</h3>
+            <p class="text-gray-600 text-sm">Projede otvorem šíře 80 cm</p>
+          </div>
+          <div class="bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
+            <div class="text-4xl mb-3">💪</div>
+            <h3 class="font-bold text-gray-800 mb-2">Spolehlivý</h3>
+            <p class="text-gray-600 text-sm">Vhodný pro běžné výkopové práce</p>
+          </div>
+          <div class="bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
+            <div class="text-4xl mb-3">🎯</div>
+            <h3 class="font-bold text-gray-800 mb-2">Přesný</h3>
+            <p class="text-gray-600 text-sm">Snadné ovládání a manévrovatelnost</p>
+          </div>
+          <div class="bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
+            <div class="text-4xl mb-3">⚡</div>
+            <h3 class="font-bold text-gray-800 mb-2">Praktický</h3>
+            <p class="text-gray-600 text-sm">Usnadní vám zemní práce</p>
+          </div>
+        </div>
       </div>
-      <p class="mt-4 text-lg">
-        Kompaktní minibagr pro domácí výkopové práce či terénní úpravy. Projede
-        úzkými otvory o šířce 80 cm, a je také vybaven mimoosím kopáním.
-      </p>
     </section>
 
     <!-- Příslušenství -->
-    <section id="prislusenstvi" class="bg-white py-8">
-      <div class="max-w-5xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">
-          Příslušenství
-        </h2>
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center"
-        >
-          <div class="text-center">
-            <img
-              src="./img/lzice_38.webp"
-              alt="Lžíce 38 cm"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Lžíce 38 cm</p>
+    <section id="prislusenstvi" class="bg-gradient-to-b from-gray-50 to-white py-16">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-4 text-gray-800">Příslušenství</h2>
+          <p class="text-lg text-gray-600">Kompletní vybavení pro všechny typy zemních prací</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          <!-- Lžíce 38 cm -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="./img/lzice_38.webp"
+                alt="Lžíce 38 cm"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Lžíce 38 cm</h3>
+              <p class="text-gray-600 text-sm">Pro standardní výkopové práce</p>
+            </div>
           </div>
-          <div class="text-center">
-            <img
-              src="./img/vrtak_20.webp"
-              alt="Vrták 20 cm"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Vrták s průměrem 20 cm</p>
+
+          <!-- Lžíce 20 cm -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="./img/lzice_20.webp"
+                alt="Lžíce 20 cm"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Lžíce 20 cm</h3>
+              <p class="text-gray-600 text-sm">Pro úzké výkopy a detailní práce</p>
+            </div>
           </div>
-          <div class="text-center">
-            <img
-              src="img/kleste.webp"
-              alt="Kleště"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Kleště</p>
+
+          <!-- Svahovka -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="./img/svahovka_80h.webp"
+                alt="Hydraulická svahovka 80 cm"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Svahovka 80 cm</h3>
+              <p class="text-gray-600 text-sm">Pro rovnání terénu</p>
+            </div>
           </div>
-          <div class="text-center">
-            <img
-              src="./img/lzice_20.webp"
-              alt="Lžíce 20 cm"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Lžíce 20 cm</p>
+
+          <!-- Vrták 20 cm -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="./img/vrtak_20.webp"
+                alt="Vrták 20 cm"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Vrták ⌀ 20 cm</h3>
+              <p class="text-gray-600 text-sm">Pro vrtání otvorů a pilot</p>
+            </div>
           </div>
-          <div class="text-center">
-            <img
-              src="./img/svahovka_80h.webp"
-              alt="Hydraulická svahovka 80 cm"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Hydraulická svahovka 80 cm</p>
+
+          <!-- Rozrývací trn -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="img/trn.webp"
+                alt="Rozrývací trn"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Rozrývací trn</h3>
+              <p class="text-gray-600 text-sm">Pro bourání a rozrývání</p>
+            </div>
           </div>
-          <div class="text-center">
-            <img
-              src="img/trn.webp"
-              alt="Rozrývací trn"
-              class="mx-auto mb-4 rounded-lg shadow-lg"
-            />
-            <p class="text-lg font-semibold">Rozrývací trn</p>
+
+          <!-- Kleště -->
+          <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+            <div class="relative overflow-hidden">
+              <img
+                src="img/kleste.webp"
+                alt="Kleště"
+                class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                ZDARMA
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Kleště</h3>
+              <p class="text-gray-600 text-sm">Pro manipulaci s materiálem</p>
+            </div>
           </div>
         </div>
-        <div class="text-center mx-auto">
-          <p class="text-lg pt-6 font-semibold text-orange-700">
-            Veškeré příslušenství je v ceně půjčovného!
+
+        <!-- Zvýraznění -->
+        <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 text-center shadow-2xl">
+          <div class="flex items-center justify-center gap-3 mb-3">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-white">Veškeré příslušenství v ceně!</h3>
+          </div>
+          <p class="text-white/90 text-lg max-w-2xl mx-auto">
+            Neplatíte žádné příplatky. Všechny nástroje a příslušenství jsou součástí standardního pronájmu.
           </p>
         </div>
       </div>
     </section>
 
     <!-- Ceník -->
-    <section id="cenik" class="bg-gradient-to-b from-orange-50 to-white py-12">
+    <section id="cenik" class="bg-gradient-to-b from-orange-50 via-white to-orange-50/30 py-16">
       <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-3 text-gray-800">Ceník</h2>
-        <p class="text-center text-gray-600 mb-8">Cena půjčovného závisí na délce pronájmu</p>
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold mb-3 text-gray-800">Ceník</h2>
+          <p class="text-lg text-gray-600">Cena půjčovného závisí na délce pronájmu</p>
+        </div>
 
         <!-- Cenové karty -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <!-- Karta 1-4 dny -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow border-2 border-orange-500 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+          <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-orange-500 relative overflow-hidden transform hover:-translate-y-1">
+            <div class="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl shadow-md">
               Nejoblíbenější
             </div>
-            <div class="p-6 text-center">
-              <h3 class="text-lg font-semibold text-gray-700 mb-2">Krátkodobý pronájem</h3>
-              <p class="text-sm text-gray-500 mb-4">1-4 dny</p>
-              <div class="mb-4">
-                <span class="text-4xl font-bold text-orange-600">1 600</span>
-                <span class="text-gray-600 text-lg">Kč/den</span>
+            <div class="p-8 text-center">
+              <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
               </div>
-              <p class="text-sm text-gray-600">Ideální pro víkendové projekty</p>
+              <h3 class="text-xl font-bold text-gray-800 mb-1">Krátkodobý</h3>
+              <p class="text-sm text-gray-500 mb-6">1-4 dny</p>
+              <div class="mb-6">
+                <span class="text-5xl font-extrabold text-orange-600">1 600</span>
+                <span class="text-gray-600 text-xl ml-1">Kč</span>
+                <div class="text-gray-500 text-sm mt-1">za den</div>
+              </div>
+              <div class="border-t border-gray-100 pt-4">
+                <p class="text-sm text-gray-600 leading-relaxed">Ideální pro víkendové projekty a menší práce</p>
+              </div>
             </div>
           </div>
 
           <!-- Karta 5-30 dní -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow border-2 border-gray-200">
-            <div class="p-6 text-center">
-              <h3 class="text-lg font-semibold text-gray-700 mb-2">Střednědobý pronájem</h3>
-              <p class="text-sm text-gray-500 mb-4">5-30 dní</p>
-              <div class="mb-4">
-                <span class="text-4xl font-bold text-orange-600">1 400</span>
-                <span class="text-gray-600 text-lg">Kč/den</span>
+          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-gray-200 relative overflow-hidden transform hover:-translate-y-1">
+            <div class="p-8 text-center">
+              <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
               </div>
-              <p class="text-sm text-gray-600">Úspora 200 Kč/den</p>
+              <h3 class="text-xl font-bold text-gray-800 mb-1">Střednědobý</h3>
+              <p class="text-sm text-gray-500 mb-6">5-30 dní</p>
+              <div class="mb-6">
+                <span class="text-5xl font-extrabold text-orange-600">1 400</span>
+                <span class="text-gray-600 text-xl ml-1">Kč</span>
+                <div class="text-gray-500 text-sm mt-1">za den</div>
+              </div>
+              <div class="border-t border-gray-100 pt-4">
+                <div class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                  Úspora 200 Kč/den
+                </div>
+                <p class="text-sm text-gray-600">Pro rozsáhlejší projekty</p>
+              </div>
             </div>
           </div>
 
           <!-- Karta 31+ dní -->
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow border-2 border-gray-200">
-            <div class="p-6 text-center">
-              <h3 class="text-lg font-semibold text-gray-700 mb-2">Dlouhodobý pronájem</h3>
-              <p class="text-sm text-gray-500 mb-4">31 a více dní</p>
-              <div class="mb-4">
-                <span class="text-4xl font-bold text-orange-600">1 000</span>
-                <span class="text-gray-600 text-lg">Kč/den</span>
+          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-gray-200 relative overflow-hidden transform hover:-translate-y-1">
+            <div class="p-8 text-center">
+              <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
               </div>
-              <p class="text-sm text-gray-600">Úspora 600 Kč/den</p>
+              <h3 class="text-xl font-bold text-gray-800 mb-1">Dlouhodobý</h3>
+              <p class="text-sm text-gray-500 mb-6">31 a více dní</p>
+              <div class="mb-6">
+                <span class="text-5xl font-extrabold text-orange-600">1 000</span>
+                <span class="text-gray-600 text-xl ml-1">Kč</span>
+                <div class="text-gray-500 text-sm mt-1">za den</div>
+              </div>
+              <div class="border-t border-gray-100 pt-4">
+                <div class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                  Úspora 600 Kč/den
+                </div>
+                <p class="text-sm text-gray-600">Nejvýhodnější varianta</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Další informace -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-          <div class="flex flex-col md:flex-row gap-20 justify-center items-center md:items-stretch">
-            <div class="flex items-center">
-              <div class="bg-orange-100 rounded-full p-3 mr-4">
-                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Kauce a doprava - samostatné karty -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-4xl mx-auto">
+          <!-- Vratná kauce -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
+            <div class="flex items-start">
+              <div class="bg-orange-100 rounded-xl p-3 mr-4 flex-shrink-0">
+                <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800">Vratná kauce</p>
-                <p class="text-2xl font-bold text-orange-600">10 000 Kč</p>
+                <p class="text-sm font-medium text-gray-500 mb-1">Vratná kauce</p>
+                <p class="text-3xl font-bold text-gray-800">10 000 <span class="text-xl text-gray-600">Kč</span></p>
+                <p class="text-xs text-gray-500 mt-2">Vrácena po vrácení minibagru</p>
               </div>
             </div>
-            <div class="flex items-center">
-              <div class="bg-orange-100 rounded-full p-3 mr-4">
-                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </div>
+
+          <!-- Doprava -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
+            <div class="flex items-start">
+              <div class="bg-orange-100 rounded-xl p-3 mr-4 flex-shrink-0">
+                <svg class="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800">Doprava</p>
-                <p class="text-2xl font-bold text-orange-600">15 Kč/km</p>
+                <p class="text-sm font-medium text-gray-500 mb-1">Doprava</p>
+                <p class="text-3xl font-bold text-gray-800">15 <span class="text-xl text-gray-600">Kč/km</span></p>
+                <p class="text-xs text-gray-500 mt-2">Cena za cestu tam i zpět</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Svépomocí -->
-        <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-6 border border-orange-200">
+        <div class="bg-gradient-to-r from-orange-100 via-orange-50 to-orange-100 rounded-2xl p-6 border-2 border-orange-200 max-w-4xl mx-auto shadow-md">
           <div class="flex items-start">
-            <svg class="w-6 h-6 text-orange-600 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <div class="bg-white rounded-full p-2 mr-4 flex-shrink-0 shadow-sm">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
             <div>
-              <p class="font-semibold text-gray-800 mb-1">Odvoz svépomocí</p>
-              <p class="text-gray-700">
-                Můžete si minibagr odvést sami za poplatek <span class="font-bold text-orange-600">500 Kč</span>,
-                ale potřebujete auto, které utáhne alespoň <span class="font-semibold">1200 kg</span>.
+              <p class="font-bold text-gray-800 mb-2 text-lg">💡 Tip: Odvoz svépomocí</p>
+              <p class="text-gray-700 leading-relaxed">
+                Ušetřete na dopravě! Můžete si minibagr odvést sami za poplatek pouze
+                <span class="font-bold text-orange-600 text-lg">500 Kč</span>.
+                Potřebujete však auto s tažnou kapacitou alespoň <span class="font-semibold">1200 kg</span>.
               </p>
             </div>
           </div>
@@ -332,372 +558,535 @@
     </section>
 
     <!-- Rezervace -->
-    <section id="rezervace" class="bg-white py-8">
-      <div class="max-w-5xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-6 text-orange-700">
-          Jak rezervovat?
-        </h2>
-        <p class="text-center text-lg mb-6 max-w-2xl mx-auto">
-          Rezervace minibagru je jednoduchá! Vyplňte následující
-          <span class="font-semibold">poptávkový formulář</span>
-          nebo nám zavolejte na číslo
-          <a href="tel:+420315559885" class="text-orange-400 hover:underline"
-            >+420 315 559 885</a
-          >.
-        </p>
-        <div class="text-center">
-          <a
-            id="showCalendar"
-            class="inline-block bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition my-4 duration-300 cursor-pointer"
-            >Zkontrolovat obsazenost</a
-          >
+    <section id="rezervace" class="bg-gradient-to-b from-gray-50 to-white py-16 relative overflow-hidden">
+      <!-- Decorative background elements -->
+      <div class="absolute top-0 left-0 w-64 h-64 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+
+      <div class="max-w-5xl mx-auto px-4 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <div class="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+            Rezervace
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            Jak rezervovat?
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Rezervace minibagru je jednoduchá! Vyplňte následující
+            <span class="font-semibold text-orange-600">poptávkový formulář</span>
+            nebo nám zavolejte na číslo
+            <a href="tel:+420315559885" class="text-orange-600 hover:text-orange-700 font-semibold underline decoration-2 underline-offset-2"
+              >+420 315 559 885</a
+            >.
+          </p>
         </div>
-        <div
-          id="calendar"
-          class="max-w-2xl mx-auto grid justify-center h-0 transition-[height] duration-500 ease-in-out overflow-hidden"
-        >
-          <iframe
-            src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FPrague&showPrint=0&showTitle=0&showCalendars=0&title=P%C5%AFj%C4%8D%20mi%20bagr&src=cHVqY21pYmFnckBnbWFpbC5jb20&color=%23795548"
-            style="border-width: 0"
-            width="800"
-            height="500"
-            frameborder="0"
-            scrolling="no"
-            class="max-w-full"
-          ></iframe>
-        </div>
+
+        <!-- Reservation Form -->
         <form
           id="rezervacni-formular"
-          class="mt-8 max-w-2xl mx-auto relative p-2"
+          class="mt-8 max-w-3xl mx-auto relative"
         >
+          <!-- Loading Overlay -->
           <div
-            class="loading-overlay hidden absolute w-full h-full top-0 left-0 bg-gray-400 rounded-md bg-opacity-50 flex items-center justify-center"
+            class="loading-overlay hidden absolute w-full h-full top-0 left-0 bg-white rounded-2xl bg-opacity-90 flex items-center justify-center z-50"
           >
-            <svg
-              class="mr-3 -ml-1 size-10 animate-spin text-gray-700"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          </div>
-          <div class="columns-2">
-            <div>
-              <label
-                for="jmeno"
-                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
-                >Vaše jméno</label
-              >
-              <input
-                type="text"
-                id="jmeno"
-                name="jmeno"
-                required
-                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
-              />
-            </div>
-            <div>
-              <label
-                for="telefon"
-                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
-                >Telefon</label
-              >
-              <input
-                type="tel"
-                id="telefon"
-                name="telefon"
-                pattern="(\+420|0)?[1-9][0-9]{8}"
-                required
-                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
-              />
-            </div>
-          </div>
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                for="email"
-                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
-                >E-mail</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
-              />
-            </div>
-            <div class="relative">
-              <label
-                for="adresa"
-                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
-                >Místo realizace</label
-              >
-              <input
-                type="text"
-                id="adresa"
-                name="adresa"
-                required
-                autocomplete="off"
-                placeholder="Začněte psát adresu..."
-                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
-              />
-              <div id="adresa-suggestions" class="hidden absolute left-0 right-0 z-50 bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto"></div>
-              <div id="vzdalenost-info" class="hidden mt-1 text-sm text-green-600">
-                <span id="vzdalenost-text"></span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                for="datum"
-                class="block text-md font-medium after:content-['*'] after:text-orange-400 after:pl-0.5"
-                >Termín pronájmu</label
-              >
-              <input
-                type="text"
-                id="datum"
-                placeholder="Vyberte termín (od - do)..."
-                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition cursor-pointer"
-                readonly
-              />
-              <!-- Skrytý input s počátečním datem pro API -->
-              <input
-                type="hidden"
-                id="datum-start"
-                name="datum"
-                required
-              />
-            </div>
-            <div>
-              <label class="block text-md font-medium">Délka pronájmu</label>
-              <div class="w-full p-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-700 text-lg font-semibold">
-                <span id="doba-zobrazeni">Vyberte termín</span>
-              </div>
-              <!-- Skrytý input pro API -->
-              <input
-                type="hidden"
-                id="doba"
-                name="doba"
-                value="1"
-              />
-            </div>
-          </div>
-          <div class="flex mt-4">
-            <div class="grow">
-              <div class="block text-md font-medium">Doprava</div>
-              <div>
-                <input
-                  type="radio"
-                  id="doprava-ano"
-                  name="doprava"
-                  class="mr-1"
-                  value="true"
-                  checked
-                />
-                <label for="doprava-ano" class="">Ano, potřebuji dopravu</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="doprava-ne"
-                  name="doprava"
-                  class="mr-1"
-                  value="false"
-                />
-                <label for="doprava-ne" class=""
-                  >Ne, dopravu si zajistím sám</label
-                >
-              </div>
-            </div>
-            <div class="grow">
-              <div class="block text-md font-medium">Příslušenství</div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="lzice"
-                  name="prislusenstvi"
-                  value="lzice"
-                  class="mr-1"
-                />
-                <label for="lzice" class="mr-4">Lžíce 38 cm</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="lzice-20"
-                  name="prislusenstvi"
-                  value="lzice-20"
-                  class="mr-1"
-                />
-                <label for="lzice-20" class="mr-4">Lžíce 20 cm</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="svahovka"
-                  name="prislusenstvi"
-                  value="svahovka"
-                  class="mr-1"
-                />
-                <label for="svahovka" class="mr-4">Svahovka 80 cm</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="vrtak"
-                  name="prislusenstvi"
-                  value="vrtak"
-                  class="mr-1"
-                />
-                <label for="vrtak" class="mr-4">Vrták 20 cm</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="kleste"
-                  name="prislusenstvi"
-                  value="kleste"
-                  class="mr-1"
-                />
-                <label for="kleste" class="mr-4">Kleště</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="trn"
-                  name="prislusenstvi"
-                  value="trn"
-                  class="mr-1"
-                />
-                <label for="trn" class="mr-4">Rozrývací trn</label>
-              </div>
-            </div>
-          </div>
-          <div class="mt-4">
-            <label for="poznamka" class="block text-md font-medium"
-              >Poznámka</label
-            >
-            <textarea
-              id="poznamka"
-              name="poznamka"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
-            ></textarea>
-          </div>
-          <div id="cena-vypocet" class="mt-6 mb-6 p-4 bg-orange-50 border-2 border-orange-200 rounded-lg">
             <div class="text-center">
-              <p class="text-sm text-gray-600 mb-1">Odhadovaná cena pronájmu</p>
-              <p class="text-3xl font-bold text-orange-600">
-                <span id="cena-hodnota">1 600</span> Kč
-              </p>
-              <p class="text-xs text-gray-500 mt-1">
-                <span id="cena-detail">1 den × 1 600 Kč/den</span>
-              </p>
-              <div class="mt-3 pt-3 border-t border-orange-300">
-                <p class="text-sm text-gray-700">
-                  + <span class="font-semibold text-orange-700">vratná kauce 10 000 Kč</span>
-                </p>
-                <p class="text-xs text-gray-500 mt-1">
-                  Kauce bude vrácena po vrácení minibagru v pořádku
-                </p>
-              </div>
+              <svg
+                class="mx-auto size-12 animate-spin text-orange-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <p class="mt-4 text-gray-600 font-medium">Odesílám poptávku...</p>
             </div>
           </div>
-          <div class="text-center">
-            <p class="text-gray-600">
-              Odesláním formuláře souhlasíte se zpracováním osobních údajů za
-              účelem vytvoření poptávky.
-            </p>
-            <div
-              id="recaptcha"
-              class="g-recaptcha"
-              data-sitekey="6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
-              data-callback="onSubmit"
-              data-size="invisible"
-              data-error-callback="onErrorCaptcha"
-            ></div>
-            <div class="error-capctha hidden">
-              <p class="text-red-500">
-                Chyba při ověření reCAPTCHA, zkuste odeslání později.
-              </p>
+
+          <!-- Form Card -->
+          <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 md:p-10">
+            <!-- Personal Information Section -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                Kontaktní údaje
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    for="jmeno"
+                    class="block text-sm font-semibold text-gray-700 mb-2 after:content-['*'] after:text-orange-500 after:pl-1"
+                    >Vaše jméno</label
+                  >
+                  <input
+                    type="text"
+                    id="jmeno"
+                    name="jmeno"
+                    required
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all"
+                    placeholder="Jan Novák"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="telefon"
+                    class="block text-sm font-semibold text-gray-700 mb-2 after:content-['*'] after:text-orange-500 after:pl-1"
+                    >Telefon</label
+                  >
+                  <input
+                    type="tel"
+                    id="telefon"
+                    name="telefon"
+                    pattern="(\+420|0)?[1-9][0-9]{8}"
+                    required
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all"
+                    placeholder="+420 123 456 789"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div>
+                  <label
+                    for="email"
+                    class="block text-sm font-semibold text-gray-700 mb-2 after:content-['*'] after:text-orange-500 after:pl-1"
+                    >E-mail</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all"
+                    placeholder="jan@example.com"
+                  />
+                </div>
+                <div class="relative">
+                  <label
+                    for="adresa"
+                    class="block text-sm font-semibold text-gray-700 mb-2 after:content-['*'] after:text-orange-500 after:pl-1"
+                    >Místo realizace</label
+                  >
+                  <input
+                    type="text"
+                    id="adresa"
+                    name="adresa"
+                    required
+                    autocomplete="off"
+                    placeholder="Začněte psát adresu..."
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all"
+                  />
+                  <div id="adresa-suggestions" class="hidden absolute left-0 right-0 z-50 bg-white border-2 border-gray-200 rounded-xl shadow-xl mt-2 max-h-60 overflow-y-auto"></div>
+                  <div id="vzdalenost-info" class="hidden mt-2 text-sm text-green-600 font-medium">
+                    <span id="vzdalenost-text"></span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="error-send hidden">
-              <p class="text-red-500">
-                Chyba při odesílání formuláře, zkuste to prosím později.
-              </p>
+
+            <!-- Rental Period Section -->
+            <div class="mb-8 pb-8 border-b border-gray-200">
+              <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Termín pronájmu
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    for="datum"
+                    class="block text-sm font-semibold text-gray-700 mb-2 after:content-['*'] after:text-orange-500 after:pl-1"
+                    >Vyberte termín</label
+                  >
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="datum"
+                      placeholder="Vyberte termín (od - do)..."
+                      class="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all cursor-pointer"
+                      readonly
+                    />
+                    <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <!-- Skrytý input s počátečním datem pro API -->
+                  <input
+                    type="hidden"
+                    id="datum-start"
+                    name="datum"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Délka pronájmu</label>
+                  <div class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-orange-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="doba-zobrazeni" class="text-gray-700 text-lg font-bold">Vyberte termín</span>
+                  </div>
+                  <!-- Skrytý input pro API -->
+                  <input
+                    type="hidden"
+                    id="doba"
+                    name="doba"
+                    value="1"
+                  />
+                </div>
+              </div>
             </div>
-            <button
-              class="bg-orange-600 text-white py-2 px-6 rounded-lg hover:bg-orange-800 transition mt-6"
-              type="submit"
-            >
-              Odeslat poptávku
-            </button>
+
+            <!-- Transport Section -->
+            <div class="mb-8 pb-8 border-b border-gray-200">
+              <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
+                Doprava
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="relative">
+                  <input
+                    type="radio"
+                    id="doprava-ano"
+                    name="doprava"
+                    value="true"
+                    checked
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="doprava-ano" class="cursor-pointer block p-5 border-2 border-gray-200 rounded-xl peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 relative">
+                    <div class="absolute top-3 right-3 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="font-semibold text-gray-900 pr-8">Ano, potřebuji dopravu</p>
+                    <p class="text-sm text-gray-600 mt-1">Dovezeme minibagr přímo k vám</p>
+                  </label>
+                </div>
+
+                <div class="relative">
+                  <input
+                    type="radio"
+                    id="doprava-ne"
+                    name="doprava"
+                    value="false"
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="doprava-ne" class="cursor-pointer block p-5 border-2 border-gray-200 rounded-xl peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 relative">
+                    <div class="absolute top-3 right-3 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="font-semibold text-gray-900 pr-8">Ne, dopravu si zajistím sám</p>
+                    <p class="text-sm text-gray-600 mt-1">Odvoz svépomocí za 500 Kč</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accessories Section -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                Příslušenství
+                <span class="ml-2 text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded-full">ZDARMA</span>
+              </h3>
+
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="relative">
+                  <input
+                    type="checkbox"
+                    id="lzice-svahovka"
+                    name="prislusenstvi"
+                    value="lzice-svahovka"
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="lzice-svahovka" class="cursor-pointer group block p-4 border-2 border-gray-200 rounded-lg peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 text-center relative">
+                    <div class="absolute top-2 right-2 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-900">Lžíce + Svahovka</p>
+                  </label>
+                </div>
+
+                <div class="relative">
+                  <input
+                    type="checkbox"
+                    id="vrtak"
+                    name="prislusenstvi"
+                    value="vrtak"
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="vrtak" class="cursor-pointer group block p-4 border-2 border-gray-200 rounded-lg peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 text-center relative">
+                    <div class="absolute top-2 right-2 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-900">Vrták 20 cm</p>
+                  </label>
+                </div>
+
+                <div class="relative">
+                  <input
+                    type="checkbox"
+                    id="trn"
+                    name="prislusenstvi"
+                    value="trn"
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="trn" class="cursor-pointer group block p-4 border-2 border-gray-200 rounded-lg peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 text-center relative">
+                    <div class="absolute top-2 right-2 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-900">Rozrývací trn</p>
+                  </label>
+                </div>
+
+                <div class="relative">
+                  <input
+                    type="checkbox"
+                    id="kleste"
+                    name="prislusenstvi"
+                    value="kleste"
+                    class="peer"
+                    style="position: absolute; width: 1px; height: 1px; opacity: 0; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                  />
+                  <label for="kleste" class="cursor-pointer group block p-4 border-2 border-gray-200 rounded-lg peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-gray-300 text-center relative">
+                    <div class="absolute top-2 right-2 w-6 h-6 rounded-full border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center transition-all opacity-0 peer-checked:opacity-100">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-900">Kleště</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="mb-8 pb-8 border-b border-gray-200">
+              <label for="poznamka" class="block text-sm font-semibold text-gray-700 mb-2">
+                Poznámka
+              </label>
+              <textarea
+                id="poznamka"
+                name="poznamka"
+                rows="4"
+                placeholder="Napište nám cokoliv, co bychom měli vědět..."
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Price Summary -->
+            <div id="cena-vypocet" class="mb-8">
+              <div class="bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-300 rounded-2xl p-6 shadow-lg">
+                <div class="text-center">
+                  <div class="flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 text-orange-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-sm font-semibold text-gray-700">Odhadovaná cena pronájmu</p>
+                  </div>
+                  <p class="text-5xl font-bold text-orange-600 mb-2">
+                    <span id="cena-hodnota">1 600</span> <span class="text-3xl">Kč</span>
+                  </p>
+                  <p class="text-sm text-gray-600 mb-4">
+                    <span id="cena-detail">1 den × 1 600 Kč/den</span>
+                  </p>
+                  <div class="pt-4 border-t-2 border-orange-300">
+                    <div class="bg-white rounded-xl p-4 shadow-sm">
+                      <p class="text-base text-gray-800 font-medium">
+                        + <span class="font-bold text-orange-700 text-lg">vratná kauce 10 000 Kč</span>
+                      </p>
+                      <p class="text-xs text-gray-600 mt-2">
+                        Kauce bude vrácena po vrácení minibagru v pořádku
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="text-center">
+              <p class="text-sm text-gray-600 mb-4 max-w-lg mx-auto">
+                Odesláním formuláře souhlasíte se zpracováním osobních údajů za
+                účelem vytvoření poptávky.
+              </p>
+              <div
+                id="recaptcha"
+                class="g-recaptcha"
+                data-sitekey="6Le3p_IqAAAAAAxFoBIhd1qF0ccQkouYRRI-x8yX"
+                data-callback="onSubmit"
+                data-size="invisible"
+                data-error-callback="onErrorCaptcha"
+              ></div>
+              <div class="error-capctha hidden mb-4">
+                <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4 inline-block">
+                  <p class="text-red-600 font-medium">
+                    Chyba při ověření reCAPTCHA, zkuste odeslání později.
+                  </p>
+                </div>
+              </div>
+              <div class="error-send hidden mb-4">
+                <div class="bg-red-50 border-2 border-red-200 rounded-xl p-4 inline-block">
+                  <p class="text-red-600 font-medium">
+                    Chyba při odesílání formuláře, zkuste to prosím později.
+                  </p>
+                </div>
+              </div>
+              <button
+                class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white py-4 px-10 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform"
+                type="submit"
+              >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span>Odeslat poptávku</span>
+              </button>
+            </div>
           </div>
         </form>
-        <div id="potvrzeni" class="mt-6 hidden">
-          <p class="text-center mt-6 text-lg">
-            <span class="text-orange-400 font-semibold text-xl">A je to.</span
-            ><br />Vaše rezervace
-            <b class="font-semibold">bude potvrzena</b> telefonicky nebo
-            e-mailem.
-          </p>
+
+        <!-- Success Message -->
+        <div id="potvrzeni" class="mt-8 hidden">
+          <div class="max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-8 shadow-xl text-center">
+            <div class="mb-4">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mb-4">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-3">A je to!</h3>
+            <p class="text-lg text-gray-700 leading-relaxed">
+              Vaše poptávka byla úspěšně odeslána.<br/>
+              <span class="font-semibold text-green-700">Potvrdíme ji</span> telefonicky nebo e-mailem.
+            </p>
+            <p class="text-sm text-gray-600 mt-4">
+              Děkujeme za Váš zájem!
+            </p>
+          </div>
         </div>
       </div>
     </section>
-    <!-- Patička -->
-    <footer id="kontakt" class="bg-gray-900 text-white py-8">
-      <div class="max-w-5xl mx-auto text-center">
-        <h3 class="text-2xl font-bold mb-4">Kontakt</h3>
-        <p class="text-lg">
-          Tel.:
-          <a href="tel:+420315559885" class="hover:underline"
-            >+420 315 559 885</a
-          >
-        </p>
-        <p class="text-lg">
-          SMS, WhatsApp:
-          <a class="hover:underline" href="tel:+420606613709"
-            >+420 606 613 709</a
-          >
-        </p>
-        <p class="text-lg">
-          E-mail:
-          <a href="mailto:info@pujcmibagr.cz" class="hover:underline"
-            >info@pujcmibagr.cz</a
-          >
-        </p>
-        <div class="mt-6">
-          <p class="text-xl font-semibold py-2">
-            Sledujte nás na sociálních sítích
-          </p>
-          <a
-            href="https://www.facebook.com/profile.php?id=61566134102378"
-            class="text-orange-400 hover:underline mx-2"
-            target="_blank"
-            >Facebook</a
-          >
-          <a
-            href="https://www.instagram.com/pujcmibagr"
-            class="text-orange-400 hover:underline mx-2"
-            target="_blank"
-            >Instagram</a
-          >
+    <!-- Footer -->
+    <footer id="kontakt" class="bg-gray-900 text-white relative overflow-hidden">
+      <!-- Decorative top wave -->
+      <div class="absolute top-0 left-0 right-0 transform rotate-180 -translate-y-1">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+          <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white"/>
+        </svg>
+      </div>
+
+      <div class="max-w-6xl mx-auto px-4 pt-40 pb-8 relative z-10">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          <!-- Company Info -->
+          <div>
+            <h3 class="text-2xl font-bold mb-4 text-orange-400">Půjčovna minibagru</h3>
+            <p class="text-gray-400 mb-4 leading-relaxed">
+              Pronájem kompaktního minibagru pro domácí i firemní projekty v Kněževsi u Rakovníka a okolí.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="text-lg font-bold mb-4">Rychlé odkazy</h4>
+            <ul class="space-y-2">
+              <li><a href="/#prislusenstvi" class="text-gray-400 hover:text-orange-400 transition-colors">Příslušenství</a></li>
+              <li><a href="/#cenik" class="text-gray-400 hover:text-orange-400 transition-colors">Ceník</a></li>
+              <li><a href="/#rezervace" class="text-gray-400 hover:text-orange-400 transition-colors">Rezervace</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h4 class="text-lg font-bold mb-4">Kontakt</h4>
+            <div class="space-y-3">
+              <a href="tel:+420315559885" class="flex items-center text-gray-400 hover:text-orange-400 transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                <span>+420 315 559 885</span>
+              </a>
+              <a href="tel:+420606613709" class="flex items-center text-gray-400 hover:text-orange-400 transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                <span>+420 606 613 709 (SMS, WhatsApp)</span>
+              </a>
+              <a href="mailto:info@pujcmibagr.cz" class="flex items-center text-gray-400 hover:text-orange-400 transition-colors group">
+                <svg class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span>info@pujcmibagr.cz</span>
+              </a>
+            </div>
+          </div>
         </div>
-        <p class="mt-6 text-gray-400">&copy; 2025 – pujcmibagr.cz</p>
+
+        <!-- Social Media -->
+        <div class="border-t border-gray-800 pt-8 mb-8">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <p class="text-gray-400">Sledujte nás:</p>
+              <a
+                href="https://www.facebook.com/profile.php?id=61566134102378"
+                target="_blank"
+                class="bg-gray-800 hover:bg-orange-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/pujcmibagr"
+                target="_blank"
+                class="bg-gray-800 hover:bg-orange-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="text-gray-500 text-sm">&copy; 2025 pujcmibagr.cz. Všechna práva vyhrazena.</p>
+          </div>
+        </div>
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -714,19 +1103,8 @@
         dismissible: true
       });
 
-      const showCalendar = document.getElementById("showCalendar");
-      const calendar = document.getElementById("calendar");
-      showCalendar.addEventListener("click", () => {
-        calendar.classList.toggle("h-0");
-        calendar.classList.toggle("h-[500px]");
-        showCalendar.textContent =
-          showCalendar.textContent === "Zkontrolovat obsazenost"
-            ? "Skrýt kalendář"
-            : "Zkontrolovat obsazenost";
-      });
-
       // API klíče
-      const API_KEY = ''; // Mapy.cz
+      const API_KEY = 'uNrP6tR7uZmOxyo3V5_-ckC4wDhBczZOLBi8A92maRQ'; // Mapy.cz
       const GOOGLE_CALENDAR_API_KEY = 'AIzaSyD5slWBwNXVGOzdLAUxHNJYXVWvX9aY5qc'; // Google Calendar API
       const CALENDAR_ID = 'pujcmibagr@gmail.com';
 
@@ -738,7 +1116,6 @@
           const coords = await ziskejSouradnice('Kněževes, 27001, Česko');
           if (coords) {
             KNEZEVES_COORDS = coords;
-            console.log('✓ Souřadnice Kněževsi aktualizovány:', KNEZEVES_COORDS);
           }
         } catch (error) {
           console.error('Chyba při inicializaci Kněževsi:', error);
@@ -748,6 +1125,8 @@
       // Globální proměnné
       let vzdalenostKm = 0;
       let vybranaDoprava = true; // defaultně ano
+      let cenaPronajmu = 0;
+      let cenaDopravy = 0;
 
       // Kalkulačka ceny pronájmu
       const dobaInput = document.getElementById("doba");
@@ -769,8 +1148,8 @@
           cenaZaDen = 1600; // defaultní cena
         }
 
-        const cenaPronajmu = dny * cenaZaDen;
-        let cenaDopravy = 0;
+        cenaPronajmu = dny * cenaZaDen;
+        cenaDopravy = 0;
 
         // Debug - můžete odstranit po testování
         console.log('Výpočet ceny:', { dny, km, doprava, cenaPronajmu });
@@ -1128,8 +1507,11 @@
 
               pocetDniGlobal = diffDays;
 
-              // Uložit počáteční datum do skrytého inputu pro API
-              const startDateStr = start.toISOString().split('T')[0];
+              // Uložit počáteční datum do skrytého inputu pro API (v lokálním čase, ne UTC)
+              const year = start.getFullYear();
+              const month = String(start.getMonth() + 1).padStart(2, '0');
+              const day = String(start.getDate()).padStart(2, '0');
+              const startDateStr = `${year}-${month}-${day}`;
               const datumInput = document.getElementById("datum-start");
               if (datumInput) {
                 datumInput.value = startDateStr;
@@ -1247,6 +1629,10 @@
         form.querySelector(".loading-overlay").classList.remove("hidden");
         form.classList.add("opacity-80");
         formDataToSend["g-recaptcha-response"] = token;
+        formDataToSend["price"] = cenaPronajmu;
+        formDataToSend["shipping"] = cenaDopravy;
+        formDataToSend["length"] = vzdalenostKm * 4;
+        formDataToSend["priceAll"] = cenaPronajmu + cenaDopravy;
         const data = formDataToSend;
         try {
           const response = await fetch(
