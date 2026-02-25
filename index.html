@@ -77,6 +77,14 @@
         background: #fed7aa;
       }
 
+      /* Zvýraznění obsazených dnů */
+      .flatpickr-day.obsazeny-den {
+        background: #fecaca !important;
+        color: #991b1b !important;
+        text-decoration: line-through;
+        pointer-events: none;
+      }
+
       /* Skrýt dny z jiných měsíců aby se nepletly s obsazenými daty */
       .flatpickr-day.prevMonthDay,
       .flatpickr-day.nextMonthDay {
@@ -1581,12 +1589,40 @@
               // Přepočítat cenu
               vypocitejCenu(diffDays);
 
-              // Zobrazit validaci
-              zobrazValidaci();
+              // Validovat termín - pokud je nevalidní, resetovat výběr
+              const validace = validujTermin(startDateStr, diffDays);
+              if (!validace.valid) {
+                notyf.error(validace.message);
+                // Resetovat výběr datepickeru
+                setTimeout(() => {
+                  instance.clear();
+                  document.getElementById("datum-start").value = "";
+                  document.getElementById("doba").value = "";
+                  document.getElementById("doba-zobrazeni").textContent = "";
+                  vypocitejCenu(1);
+                }, 100);
+              }
             }
           },
           onReady: function(selectedDates, dateStr, instance) {
             console.log('Flatpickr inicializován s', obsazenaData.length, 'obsazenými obdobími');
+          },
+          onDayCreate: function(dObj, dStr, fp, dayElem) {
+            const date = dayElem.dateObj;
+            // Normalizovat na YYYY-MM-DD string pro spolehlivé porovnání
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+
+            // Zkontrolovat, zda den spadá do některého obsazeného rozsahu
+            for (let obsazene of obsazenaData) {
+              if (dateStr >= obsazene.from && dateStr <= obsazene.to) {
+                dayElem.classList.add('obsazeny-den');
+                dayElem.title = 'Obsazeno';
+                break;
+              }
+            }
           }
         });
       }
@@ -1615,25 +1651,6 @@
 
         return { valid: true };
       }
-
-      // Funkce pro zobrazení validační zprávy
-      function zobrazValidaci() {
-        const datum = document.getElementById("datum-start").value;
-        const doba = parseInt(document.getElementById("doba").value) || 1;
-
-        if (!datum) {
-          return;
-        }
-
-        const validace = validujTermin(datum, doba);
-
-        // Zobrazit pouze error notifikaci, success je zbytečná
-        // protože obsazené dny jsou v date pickeru disabled
-        if (!validace.valid) {
-          notyf.error(validace.message);
-        }
-      }
-
       // Inicializace s defaultní hodnotou (1 den)
       vypocitejCenu(1);
 
