@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Generátor předávacího protokolu — Půjčovna minibagru</title>
+<link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+<style>
+  /* ------------------------------------------------------------------ *
+   *  Generátor předávacího protokolu — pujcmibagr.cz                    *
+   *  Plně samostatné, bez externích závislostí (funguje i offline).    *
+   * ------------------------------------------------------------------ */
+
+  :root {
+    --brand: #ea580c;
+    --brand-dark: #c2410c;
+    --brand-soft: #fff7ed;
+    --ink: #1c1917;
+    --muted: #78716c;
+    --line: #e7e5e4;
+    --panel: #ffffff;
+    --bg: #f5f5f4;
+    --doc-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --ui-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--ui-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============================= LAYOUT ============================== */
+
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ------------------------------ FORM ------------------------------ */
+
+  .form-panel {
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .form-header {
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, var(--brand-soft), #fff);
+  }
+  .form-header .kicker {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brand-dark);
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .form-header h1 {
+    font-size: 18px;
+    margin: 0;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .form-header p {
+    margin: 8px 0 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .form-body { padding: 20px 24px 40px; }
+
+  fieldset {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0;
+    padding: 20px 0 4px;
+  }
+  fieldset:first-of-type { border-top: none; padding-top: 4px; }
+  legend {
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--brand-dark);
+    font-weight: 700;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  legend .num {
+    width: 18px; height: 18px;
+    display: inline-grid; place-items: center;
+    background: var(--brand); color: #fff;
+    border-radius: 50%; font-size: 11px;
+  }
+
+  .field { margin-top: 14px; }
+  .field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #44403c;
+    margin-bottom: 5px;
+  }
+  .field .hint { font-weight: 400; color: var(--muted); }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 14px;
+    padding: 9px 11px;
+    border: 1px solid #d6d3d1;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  textarea { resize: vertical; min-height: 58px; }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(234,88,12,.15);
+  }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Segmented transport control */
+  .seg { display: grid; gap: 8px; margin-top: 6px; }
+  .seg label {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid #d6d3d1;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13.5px;
+    transition: border-color .15s, background .15s;
+  }
+  .seg label:hover { border-color: var(--brand); }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg .dot {
+    width: 16px; height: 16px; margin-top: 1px;
+    border-radius: 50%; border: 2px solid #a8a29e;
+    flex: none; position: relative; transition: border-color .15s;
+  }
+  .seg input:checked + .dot { border-color: var(--brand); }
+  .seg input:checked + .dot::after {
+    content: ""; position: absolute; inset: 2px;
+    border-radius: 50%; background: var(--brand);
+  }
+  .seg label:has(input:checked) {
+    border-color: var(--brand); background: var(--brand-soft);
+  }
+  .seg .txt strong { display: block; font-weight: 600; }
+  .seg .txt span { color: var(--muted); font-size: 12px; }
+
+  /* Toolbar */
+  .toolbar {
+    position: sticky; bottom: 0;
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 14px 24px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line);
+  }
+  .btn {
+    font: inherit; font-weight: 600; font-size: 14px;
+    border: none; border-radius: 9px;
+    padding: 11px 16px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .15s, transform .05s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--brand); color: #fff; flex: 1 1 100%; justify-content: center; }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-ghost { background: #f5f5f4; color: #44403c; flex: 1; justify-content: center; }
+  .btn-ghost:hover { background: #e7e5e4; }
+
+  /* --------------------------- PREVIEW ------------------------------ */
+
+  .preview {
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* The printable A4 document */
+  .document {
+    background: #fff;
+    width: 210mm;
+    max-width: 100%;
+    min-height: 297mm;
+    padding: 20mm 18mm;
+    box-shadow: 0 10px 40px rgba(0,0,0,.12);
+    font-family: var(--doc-serif);
+    color: #111;
+    font-size: 11.2pt;
+    line-height: 1.5;
+  }
+
+  .doc-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 10px;
+    border-bottom: 2.5px solid var(--brand);
+  }
+  .doc-head .brand-name {
+    font-size: 17pt; font-weight: 700; letter-spacing: .01em;
+  }
+  .doc-head .brand-name .accent { color: var(--brand); }
+  .doc-head .tagline { font-size: 9pt; color: #555; margin-top: 2px; font-family: var(--ui-sans); }
+  .doc-head .contact {
+    text-align: right; font-size: 8.6pt; color: #444; line-height: 1.5;
+    font-family: var(--ui-sans);
+  }
+
+  .doc-title {
+    text-align: center;
+    font-size: 15pt;
+    font-weight: 700;
+    margin: 22px 0 4px;
+  }
+  .doc-subtitle {
+    text-align: center; font-size: 10pt; color: #555;
+    font-family: var(--ui-sans); margin-bottom: 20px;
+  }
+
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .party {
+    border: 1px solid #ddd; border-radius: 4px; padding: 11px 13px;
+  }
+  .party h3 {
+    margin: 0 0 7px; font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--brand-dark); font-family: var(--ui-sans);
+  }
+  .party .line { margin: 2px 0; }
+  .party .lbl { color: #666; font-family: var(--ui-sans); font-size: 8.6pt; }
+
+  .details { margin-bottom: 16px; }
+  .details table { width: 100%; border-collapse: collapse; }
+  .details td {
+    padding: 4px 0; border-bottom: 1px solid #eee; vertical-align: top;
+  }
+  .details td.k {
+    width: 42%; color: #555; font-family: var(--ui-sans); font-size: 9.4pt;
+    padding-right: 12px;
+  }
+  .details td.v { font-weight: 600; }
+
+  .section-title {
+    font-size: 11pt; font-weight: 700; margin: 14px 0 7px;
+    padding-bottom: 3px; border-bottom: 1px solid #ccc;
+  }
+
+  ol.terms { margin: 0; padding-left: 20px; }
+  ol.terms li { margin: 4.5px 0; padding-left: 4px; }
+
+  .deposit {
+    background: #faf8f6; border: 1px solid #e7e0d8;
+    border-radius: 4px; padding: 12px 14px; margin: 14px 0;
+  }
+
+  .transport-note {
+    margin: 16px 0; padding: 11px 14px;
+    border: 1px solid #f0c98a; border-left: 4px solid var(--brand);
+    background: #fff8ef; border-radius: 4px;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .transport-note[hidden] { display: none; }
+  .transport-note h4 {
+    margin: 0 0 6px; font-size: 9pt; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--brand-dark); font-family: var(--ui-sans);
+  }
+  .transport-note ul { margin: 0; padding-left: 18px; }
+  .transport-note li { margin: 3px 0; }
+  .transport-note li[hidden] { display: none; }
+  .deposit p { margin: 4px 0; }
+
+  .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; break-inside: avoid; }
+  .sig { text-align: center; }
+  .sig .rule { border-top: 1px solid #333; padding-top: 6px; margin-top: 56px; }
+  .sig .role { font-size: 9.4pt; color: #444; font-family: var(--ui-sans); }
+  .sig .who { font-weight: 600; min-height: 1em; }
+
+  .fill { color: #111; }
+  .fill.empty {
+    color: #bbb; border-bottom: 1px dotted #bbb; padding: 0 30px;
+  }
+
+  .return-block { margin-top: 22px; padding-top: 14px; border-top: 2px dashed #ccc; break-inside: avoid; }
+  .deposit { break-inside: avoid; }
+
+  .doc-foot {
+    margin-top: 26px; padding-top: 8px; border-top: 1px solid #ddd;
+    font-family: var(--ui-sans); font-size: 8pt; color: #888; text-align: center;
+  }
+
+  /* Upozornění na oboustranný tisk — statický řádek pod podtitulkem */
+  .print-note {
+    text-align: center;
+    font-family: var(--ui-sans);
+    font-size: 8.6pt; font-weight: 600; letter-spacing: .02em;
+    color: var(--brand-dark);
+    margin: -8px 0 12px;
+  }
+
+  /* ============================== PRINT ============================= */
+
+  @page { size: A4; margin: 12mm; }
+
+  @media print {
+    html, body { background: #fff; }
+    .form-panel, .toolbar { display: none !important; }
+    .layout { display: block; }
+    .preview { padding: 0; display: block; }
+    .document {
+      width: auto; min-height: 0; padding: 0;
+      box-shadow: none; font-size: 9.9pt;
+    }
+    .fill.empty { color: #999; border-bottom-color: #999; }
+  }
+
+  /* --------------------------- RESPONSIVE --------------------------- */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .form-panel { position: static; height: auto; }
+    .preview { padding: 16px; }
+    .document { padding: 12mm; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- =========================== FORM =========================== -->
+  <form class="form-panel" id="form" autocomplete="off">
+    <div class="form-header">
+      <p class="kicker">Interní nástroj · pujcmibagr.cz</p>
+      <h1>Generátor předávacího protokolu</h1>
+      <p>Vyplňte údaje o pronájmu. Náhled vpravo se aktualizuje živě. Prázdná pole zůstanou pro ruční doplnění.</p>
+    </div>
+
+    <div class="form-body">
+
+      <fieldset>
+        <legend><span class="num">1</span> Nájemce — kdo</legend>
+        <div class="field">
+          <label for="najemce_jmeno">Jméno a příjmení / firma</label>
+          <input type="text" id="najemce_jmeno" placeholder="Jan Novák" />
+        </div>
+        <div class="field">
+          <label for="najemce_adresa">Adresa <span class="hint">(bydliště / sídlo)</span></label>
+          <input type="text" id="najemce_adresa" placeholder="Ulice 123, 270 01 Kněževes" />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="najemce_tel">Telefon</label>
+            <input type="tel" id="najemce_tel" placeholder="+420 …" />
+          </div>
+          <div class="field">
+            <label for="najemce_op">Č. OP / dat. nar. <span class="hint"></span></label>
+            <input type="text" id="najemce_op" placeholder="volitelné" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num">2</span> Kam &amp; kdy</legend>
+        <div class="field">
+          <label for="misto">Místo předání / použití stroje</label>
+          <input type="text" id="misto" placeholder="obec, adresa staveniště" />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="datum_od">Předání (od)</label>
+            <input type="date" id="datum_od" />
+          </div>
+          <div class="field">
+            <label for="datum_do">Vrácení (do)</label>
+            <input type="date" id="datum_do" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num">3</span> Doprava</legend>
+        <div class="seg">
+          <label>
+            <input type="radio" name="doprava" value="vlastni" checked />
+            <span class="dot"></span>
+            <span class="txt"><strong>Vlastní odvoz nájemcem</strong><span>Nájemce si stroj odveze i přiveze sám</span></span>
+          </label>
+          <label>
+            <input type="radio" name="doprava" value="vlek" />
+            <span class="dot"></span>
+            <span class="txt"><strong>Zapůjčení přepravního vleku</strong><span>Ke stroji se půjčuje i vlek</span></span>
+          </label>
+          <label>
+            <input type="radio" name="doprava" value="preprava" />
+            <span class="dot"></span>
+            <span class="txt"><strong>Přeprava pronajímatelem</strong><span>Stroj přiveze a odveze pronajímatel</span></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num">4</span> Cena &amp; kauce</legend>
+        <div class="row">
+          <div class="field">
+            <label for="cena_den">Cena za den <span class="hint">(Kč)</span></label>
+            <input type="number" id="cena_den" min="0" step="100" placeholder="1600" />
+          </div>
+          <div class="field">
+            <label for="uct_dny">Účtované dny <span class="hint">(volitelné)</span></label>
+            <input type="number" id="uct_dny" min="1" step="1" placeholder="auto z termínu" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="cena_doprava">Cena za dopravu <span class="hint">(Kč)</span></label>
+            <input type="number" id="cena_doprava" min="0" step="100" placeholder="volitelné" />
+          </div>
+          <div class="field">
+            <label for="kauce">Vratná kauce <span class="hint">(Kč)</span></label>
+            <input type="number" id="kauce" min="0" step="500" value="10000" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="poznamka">Poznámka <span class="hint">(volitelné — stav nádrže, příslušenství…)</span></label>
+          <textarea id="poznamka" placeholder=""></textarea>
+        </div>
+      </fieldset>
+
+    </div>
+
+    <div class="toolbar">
+      <button type="button" class="btn btn-ghost" id="btn-reset" title="Vyčistit formulář">Vyčistit</button>
+      <button type="button" class="btn btn-ghost" id="btn-link" title="Zkopírovat odkaz s vyplněnými údaji (do Trella)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Odkaz s údaji
+      </button>
+      <button type="button" class="btn btn-primary" id="btn-print">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Tisk / uložit PDF
+      </button>
+    </div>
+  </form>
+
+  <!-- ========================= PREVIEW ========================== -->
+  <div class="preview">
+    <article class="document" id="doc">
+
+      <header class="doc-head">
+        <div>
+          <div class="brand-name">Půjčovna <span class="accent">minibagru</span></div>
+          <div class="tagline">Kněževes u Rakovníka · zemní práce pro dům i firmu</div>
+        </div>
+        <div class="contact" id="doc-pronajimatel-contact"></div>
+      </header>
+
+      <h1 class="doc-title">Předávací protokol o pronájmu stroje</h1>
+      <p class="doc-subtitle">Minibagr BG910.02 (dále jen „stroj")</p>
+
+      <div class="print-note">⇄&nbsp; Oboustranný dokument (2 strany) — podepište prosím obě strany.</div>
+
+      <div class="parties">
+        <div class="party">
+          <h3>Pronajímatel</h3>
+          <div id="doc-pronajimatel"></div>
+        </div>
+        <div class="party">
+          <h3>Nájemce</h3>
+          <div class="line" id="d-najemce-jmeno"></div>
+          <div class="line"><span class="lbl">Adresa:</span> <span id="d-najemce-adresa"></span></div>
+          <div class="line"><span class="lbl">Telefon:</span> <span id="d-najemce-tel"></span></div>
+          <div class="line"><span class="lbl">Č. OP / nar.:</span> <span id="d-najemce-op"></span></div>
+        </div>
+      </div>
+
+      <div class="details">
+        <table>
+          <tr><td class="k">Předmět pronájmu</td><td class="v">Minibagr BG910.02</td></tr>
+          <tr><td class="k">Místo předání / použití</td><td class="v" id="d-misto"></td></tr>
+          <tr><td class="k">Termín pronájmu</td><td class="v" id="d-termin"></td></tr>
+          <tr><td class="k">Způsob dopravy</td><td class="v" id="d-doprava"></td></tr>
+          <tr><td class="k">Cena pronájmu</td><td class="v" id="d-cena"></td></tr>
+          <tr id="d-cena-doprava-row"><td class="k">Cena za dopravu</td><td class="v" id="d-cena-doprava"></td></tr>
+          <tr id="d-poznamka-row"><td class="k">Poznámka</td><td class="v" id="d-poznamka"></td></tr>
+        </table>
+      </div>
+
+      <div class="transport-note" id="transport-note" hidden>
+        <h4>⚠&nbsp; Přeprava a manipulace se strojem — důležité</h4>
+        <ul>
+          <li>Při <strong>nakládce a vykládce</strong> stroje je nutné dbát <strong>zvýšené opatrnosti</strong>.</li>
+          <li id="tn-vlek-rz">Stroj je zapůjčen na přívěsném vozíku <strong>Vezeko, RZ 6SC 7171</strong>.</li>
+          <li id="tn-vlek-vaha">Souprava (přívěs + minibagr) váží cca <strong>1 300 kg</strong> — k tažení může být vyžadováno řidičské oprávnění skupiny <strong>B+E</strong>.</li>
+        </ul>
+      </div>
+
+      <h2 class="section-title">Podmínky pronájmu</h2>
+      <ol class="terms">
+        <li>Předmětem pronájmu je minibagr BG910.02, dále jen „stroj".</li>
+        <li>Nájemce užívá stroj <strong>na vlastní odpovědnost</strong> a s péčí řádného hospodáře. Pronajímatel předává stroj v provozuschopném a bezpečném stavu; za škody či újmu vzniklé v důsledku nesprávné obsluhy, nakládky, vykládky nebo provozu stroje ze strany nájemce odpovídá nájemce.</li>
+        <li>Nájemce po dobu pronájmu <strong>odpovídá za zapůjčený stroj</strong>, včetně jeho poškození, ztráty či odcizení, a je povinen jej vrátit ve stavu, v jakém jej převzal, s přihlédnutím k obvyklému opotřebení. Případnou škodu a neuhrazené poplatky je pronajímatel oprávněn <strong>započíst proti složené kauci</strong>.</li>
+        <li>Nájemce bere na vědomí, že zapůjčený stroj lze provozovat <strong>pouze na soukromém pozemku</strong> a pro vlastní potřebu.</li>
+        <li>Jakoukoli závadu je nájemce povinen <strong>neprodleně oznámit</strong> pronajímateli.</li>
+        <li>Při používání stroje ve vnitřních či nedostatečně větraných prostorách je nutné zajistit <strong>důkladné větrání — hrozí otrava spalinami!</strong></li>
+        <li>Nájemce je povinen dodržovat bezpečnostní pokyny, zejména provozovat stroj s <strong>nasazeným ochranným rámem</strong>.</li>
+        <li>Není-li domluveno jinak, je stroj předáván s plnou nádrží nafty a vrácení probíhá rovněž s plnou nádrží. Pokud tomu tak není, vyhrazuje si pronajímatel právo účtovat poplatek za tankování.</li>
+        <li>V případě úplného vyčerpání nádrže dojde k <strong>zavzdušnění</strong> palivové soustavy stroje; nájemce v takovém případě hradí <strong>náhradu nákladů na odvzdušnění a servis ve výši 500 Kč</strong>.</li>
+        <li>Nájemce podpisem a složením kauce stvrzuje, že byl seznámen s bezpečnostními pokyny a ovládáním zapůjčeného stroje a přebírá jej v provozuschopném stavu.</li>
+      </ol>
+
+      <div class="deposit">
+        <p><strong>Vratná kauce.</strong> Pronajímatel potvrzuje přijetí vratné kauce ve výši <strong id="d-kauce"></strong> za pronájem minibagru BG910.02.</p>
+        <p>Započetí pronájmu a přijetí kauce dne: <strong id="d-datum-od"></strong></p>
+      </div>
+
+      <div class="signatures">
+        <div class="sig"><div class="rule"><div class="role">Pronajímatel</div><div class="who"></div></div></div>
+        <div class="sig"><div class="rule"><div class="role">Nájemce</div><div class="who" id="d-sig-najemce"></div></div></div>
+      </div>
+
+      <div class="return-block">
+        <h2 class="section-title">Vrácení stroje a kauce</h2>
+        <div class="deposit">
+          <p>Vrácení stroje a kauce dne: <strong id="d-datum-do"></strong></p>
+          <p>Pronajímatel potvrzuje vrácení vratné kauce ve výši <strong id="d-kauce2"></strong> za pronájem minibagru BG910.02. Stroj byl vrácen v pořádku, bez závad nad rámec běžného opotřebení.</p>
+        </div>
+        <div class="signatures">
+          <div class="sig"><div class="rule"><div class="role">Pronajímatel</div><div class="who"></div></div></div>
+          <div class="sig"><div class="rule"><div class="role">Nájemce</div><div class="who" id="d-sig-najemce2"></div></div></div>
+        </div>
+      </div>
+
+      <div class="doc-foot" id="doc-foot"></div>
+
+    </article>
+  </div>
+
+</div>
+
+<script>
+  /* =================================================================
+   *  ÚDAJE PRONAJÍMATELE — uprav si zde (jednou), promítne se do dokumentu.
+   *  IČO / celé jméno doplň dle skutečnosti; prázdné řádky se nezobrazí.
+   * ================================================================= */
+  const PRONAJIMATEL = {
+    nazev:   "Jakub Englický",
+    jmeno:   "",                    // volitelný druhý řádek (necháváme prázdné)
+    ico:     "04689631",            // IČO
+    adresa:  "Krokova 153, 270 01 Kněževes",
+    telefon: "+420 315 559 885",
+    mobil:   "+420 606 613 709",
+    email:   "info@pujcmibagr.cz",
+    web:     "www.pujcmibagr.cz",
+  };
+
+  // ---------- helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => (s || "").replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+
+  function fill(el, value, blankPad) {
+    if (!el) return;
+    if (value && String(value).trim() !== "") {
+      el.innerHTML = '<span class="fill">' + esc(String(value)) + '</span>';
+    } else {
+      el.innerHTML = '<span class="fill empty">' + "&nbsp;".repeat(blankPad || 8) + '</span>';
+    }
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return "";
+    const [y, m, d] = iso.split("-");
+    if (!y || !m || !d) return "";
+    return `${+d}. ${+m}. ${y}`;
+  }
+
+  function fmtCZK(n) {
+    if (n === "" || n == null || isNaN(n)) return "";
+    return new Intl.NumberFormat("cs-CZ").format(n) + " Kč";
+  }
+
+  function daysBetween(a, b) {
+    if (!a || !b) return 0;
+    const d1 = new Date(a), d2 = new Date(b);
+    const diff = Math.round((d2 - d1) / 86400000);
+    return diff >= 0 ? diff + 1 : 0;  // inkluzivně (den předání i vrácení)
+  }
+
+  const DOPRAVA = {
+    vlastni:  "Vlastní odvoz nájemcem",
+    vlek:     "Zapůjčení přepravního vleku",
+    preprava: "Přeprava zajištěná pronajímatelem",
+  };
+
+  // ---------- render static pronajímatel ----------
+  (function renderPronajimatel() {
+    const p = PRONAJIMATEL;
+    const rows = [];
+    rows.push(`<div class="line"><strong>${esc(p.nazev)}</strong></div>`);
+    if (p.jmeno)  rows.push(`<div class="line">${esc(p.jmeno)}</div>`);
+    if (p.ico)    rows.push(`<div class="line"><span class="lbl">IČO:</span> ${esc(p.ico)}</div>`);
+    if (p.adresa) rows.push(`<div class="line"><span class="lbl">Adresa:</span> ${esc(p.adresa)}</div>`);
+    if (p.telefon)rows.push(`<div class="line"><span class="lbl">Telefon:</span> ${esc(p.telefon)}</div>`);
+    if (p.email)  rows.push(`<div class="line"><span class="lbl">E-mail:</span> ${esc(p.email)}</div>`);
+    $("doc-pronajimatel").innerHTML = rows.join("");
+
+    const c = [];
+    if (p.telefon) c.push(esc(p.telefon));
+    if (p.mobil)   c.push(esc(p.mobil) + " (SMS, WhatsApp)");
+    if (p.email)   c.push(esc(p.email));
+    if (p.web)     c.push(esc(p.web));
+    $("doc-pronajimatel-contact").innerHTML = c.join("<br>");
+
+    $("doc-foot").textContent =
+      [p.nazev, p.web, p.telefon].filter(Boolean).join("  ·  ") +
+      "   —   Vyhotoveno ve dvou stejnopisech, po jednom pro každou smluvní stranu.";
+  })();
+
+  // ---------- live render ----------
+  function render() {
+    const jmeno   = $("najemce_jmeno").value.trim();
+    const adresa  = $("najemce_adresa").value.trim();
+    const tel     = $("najemce_tel").value.trim();
+    const op      = $("najemce_op").value.trim();
+    const misto   = $("misto").value.trim();
+    const dOd     = $("datum_od").value;
+    const dDo     = $("datum_do").value;
+    const cenaDen = $("cena_den").value;
+    const uctDny  = parseInt($("uct_dny").value, 10);
+    const kauce   = $("kauce").value;
+    const pozn    = $("poznamka").value.trim();
+    const doprava = (document.querySelector('input[name="doprava"]:checked') || {}).value;
+
+    // Nájemce
+    if (jmeno) $("d-najemce-jmeno").innerHTML = '<strong>' + esc(jmeno) + '</strong>';
+    else fill($("d-najemce-jmeno"), "", 14);
+    fill($("d-najemce-adresa"), adresa, 14);
+    fill($("d-najemce-tel"), tel, 10);
+    fill($("d-najemce-op"), op, 10);
+
+    // Detaily
+    fill($("d-misto"), misto, 16);
+
+    // Kalendářní rozpětí termínu vs. účtované dny (cena se váže na účtované dny).
+    const calDni  = daysBetween(dOd, dDo);
+    const billDni = (uctDny >= 1) ? uctDny : calDni;
+    const denSlovo = (n) => n === 1 ? "den" : (n >= 2 && n <= 4) ? "dny" : "dní";
+
+    // Termín — pouze data (počet dní patří k ceně)
+    let termin = "";
+    if (dOd || dDo) termin = `${fmtDate(dOd) || "…"} — ${fmtDate(dDo) || "…"}`;
+    fill($("d-termin"), termin, 20);
+
+    fill($("d-doprava"), DOPRAVA[doprava] || "", 16);
+
+    // Upozornění na přepravu — jen když nevezeme stroj my (vlastní odvoz / vlek).
+    // Údaje o našem vleku Vezeko jen u varianty "vlek".
+    $("transport-note").hidden = !(doprava === "vlastni" || doprava === "vlek");
+    $("tn-vlek-rz").hidden = doprava !== "vlek";
+    $("tn-vlek-vaha").hidden = doprava !== "vlek";
+
+    // Cena — na počet účtovaných dní
+    let cenaText = "";
+    if (cenaDen) {
+      cenaText = fmtCZK(cenaDen) + " / den";
+      if (billDni > 0) cenaText += `  ·  ${billDni} ${denSlovo(billDni)}  ·  celkem ${fmtCZK(cenaDen * billDni)}`;
+    }
+    fill($("d-cena"), cenaText, 16);
+
+    // Cena za dopravu (schovej řádek, pokud prázdná)
+    const cenaDopravy = $("cena_doprava").value;
+    $("d-cena-doprava-row").style.display = cenaDopravy ? "" : "none";
+    if (cenaDopravy) $("d-cena-doprava").textContent = fmtCZK(cenaDopravy);
+
+    // Poznámka (schovej řádek, pokud prázdná)
+    $("d-poznamka-row").style.display = pozn ? "" : "none";
+    if (pozn) $("d-poznamka").textContent = pozn;
+
+    // Kauce
+    const kauceText = fmtCZK(kauce) || "…… Kč";
+    $("d-kauce").textContent = kauceText;
+    $("d-kauce2").textContent = kauceText;
+
+    // Datumy v protokolu / podpisy
+    fill($("d-datum-od"), fmtDate(dOd), 12);
+    fill($("d-datum-do"), fmtDate(dDo), 12);
+    $("d-sig-najemce").textContent = jmeno || "";
+    $("d-sig-najemce2").textContent = jmeno || "";
+  }
+
+  /* =================================================================
+   *  Prefill z URL (query string) — pro proklik z Trella.
+   *  Podporované parametry (vše volitelné):
+   *    jmeno, adresa, tel, op, misto, od, do, dni, doprava, cena, dcena, kauce, poznamka
+   *    dcena  = cena za dopravu (Kč), volitelný samostatný řádek
+   *    od/do  = datum ve formátu RRRR-MM-DD nebo DD.MM.RRRR
+   *    dni    = ÚČTOVANÉ dny (řídí cenu = cena × dni, nezávisle na termínu).
+   *             Když je "od" + "dni" a chybí "do", datum vrácení se dopočítá
+   *             (od + dni − 1). Když je "do" zadané, zůstává a "dni" jen účtují.
+   *    doprava = vlastni | vlek | preprava
+   *    tisk=1  → po načtení rovnou otevře tiskový dialog
+   *  Příklady:
+   *    /podgen/?jmeno=Jan%20Novák&misto=Rakovník&od=2026-08-10&do=2026-08-12&doprava=preprava&cena=1600
+   *    /podgen/?jmeno=Jan%20Novák&od=2026-08-10&dni=3&cena=1600&tisk=1
+   *    předání dřív, účtujeme míň: &od=2026-08-09&do=2026-08-12&dni=2 (termín 9.–12., cena za 2 dny)
+   * ================================================================= */
+  const FIELD_PARAMS = {
+    jmeno: "najemce_jmeno", najemce_jmeno: "najemce_jmeno",
+    adresa: "najemce_adresa", najemce_adresa: "najemce_adresa",
+    tel: "najemce_tel", telefon: "najemce_tel", najemce_tel: "najemce_tel",
+    op: "najemce_op", najemce_op: "najemce_op",
+    misto: "misto",
+    od: "datum_od", datum_od: "datum_od",
+    do: "datum_do", datum_do: "datum_do",
+    cena: "cena_den", cena_den: "cena_den",
+    dcena: "cena_doprava", cenadopravy: "cena_doprava", cena_doprava: "cena_doprava",
+    dni: "uct_dny", pocet: "uct_dny", uctdni: "uct_dny", uct_dny: "uct_dny",
+    kauce: "kauce",
+    poznamka: "poznamka", pozn: "poznamka",
+  };
+
+  function normDate(s) {
+    s = (s || "").trim();
+    if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)) {
+      const [y, m, d] = s.split("-");
+      return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    }
+    const m = s.match(/^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/);
+    if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+    return s;
+  }
+
+  // Přičte n dní k datu RRRR-MM-DD (počítá v místním čase, ne UTC).
+  function addDays(iso, n) {
+    const [y, m, d] = iso.split("-").map(Number);
+    const dt = new Date(y, m - 1, d);
+    dt.setDate(dt.getDate() + n);
+    const mm = String(dt.getMonth() + 1).padStart(2, "0");
+    const dd = String(dt.getDate()).padStart(2, "0");
+    return `${dt.getFullYear()}-${mm}-${dd}`;
+  }
+
+  function prefillFromQuery() {
+    const p = new URLSearchParams(location.search);
+    for (const [rawKey, rawVal] of p) {
+      const key = rawKey.toLowerCase();
+      if (key === "doprava") {
+        const r = document.querySelector('input[name="doprava"][value="' + CSS.escape(rawVal.trim().toLowerCase()) + '"]');
+        if (r) r.checked = true;
+        continue;
+      }
+      const id = FIELD_PARAMS[key];
+      if (!id) continue;
+      const el = $(id);
+      if (!el) continue;
+      el.value = (id === "datum_od" || id === "datum_do") ? normDate(rawVal) : rawVal;
+    }
+
+    // Dopočet data vrácení z "od" + účtovaných dní (jen když "do" není zadané).
+    // Když je "do" zadané zvlášť (předání dřív apod.), zůstává a dny jen účtují cenu.
+    const od = $("datum_od").value;
+    const n = parseInt($("uct_dny").value, 10);
+    if (od && !$("datum_do").value && n >= 1) {
+      $("datum_do").value = addDays(od, n - 1);
+    }
+
+    render();
+    if (p.get("tisk") === "1" || p.get("print") === "1") {
+      setTimeout(() => window.print(), 400);
+    }
+  }
+
+  function buildShareLink() {
+    const p = new URLSearchParams();
+    const add = (k, id) => { const el = $(id); if (el && el.value.trim()) p.set(k, el.value.trim()); };
+    add("jmeno", "najemce_jmeno");
+    add("adresa", "najemce_adresa");
+    add("tel", "najemce_tel");
+    add("op", "najemce_op");
+    add("misto", "misto");
+    add("od", "datum_od");
+    add("do", "datum_do");
+    add("cena", "cena_den");
+    add("dcena", "cena_doprava");
+    add("dni", "uct_dny");
+    add("kauce", "kauce");
+    add("poznamka", "poznamka");
+    const dop = (document.querySelector('input[name="doprava"]:checked') || {}).value;
+    if (dop) p.set("doprava", dop);
+    const qs = p.toString();
+    return location.origin + location.pathname + (qs ? "?" + qs : "");
+  }
+
+  // ---------- events ----------
+  $("form").addEventListener("input", render);
+  $("form").addEventListener("change", render);
+
+  $("btn-print").addEventListener("click", () => window.print());
+
+  $("btn-reset").addEventListener("click", () => {
+    $("form").reset();
+    render();
+  });
+
+  $("btn-link").addEventListener("click", async (e) => {
+    const btn = e.currentTarget;
+    const link = buildShareLink();
+    const label = btn.innerHTML;
+    try {
+      await navigator.clipboard.writeText(link);
+    } catch (_) {
+      // fallback pro prostředí bez clipboard API
+      const ta = document.createElement("textarea");
+      ta.value = link; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch (_) {}
+      ta.remove();
+    }
+    btn.textContent = "✓ Zkopírováno";
+    setTimeout(() => { btn.innerHTML = label; }, 1600);
+  });
+
+  prefillFromQuery();
+</script>
+</body>
+</html>
