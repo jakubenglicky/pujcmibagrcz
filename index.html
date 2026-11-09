@@ -45,6 +45,9 @@
         scroll-snap-align: center;
       }
 
+      /* Široké monitory: zvětšit celé rozvržení, ať obsah nezůstane ztracený uprostřed */
+      @media (min-width: 1800px) { html { font-size: 112.5%; } }
+      @media (min-width: 2300px) { html { font-size: 131%; } }
       /* Zavírka sezóny: zapíná/vypíná třída "sezona-ukoncena" na <body> */
       .sezona-info { display: none; }
       body.sezona-ukoncena .sezona-info { display: block; }
@@ -205,7 +208,7 @@
 
       <!-- Decorative bottom wave -->
       <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full block" style="height: clamp(48px, 6vw, 120px)">
           <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white"/>
         </svg>
       </div>
@@ -1069,7 +1072,7 @@
     <footer id="kontakt" class="bg-gray-900 text-white relative overflow-hidden">
       <!-- Decorative top wave -->
       <div class="absolute top-0 left-0 right-0 transform rotate-180 -translate-y-1">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full block" style="height: clamp(48px, 6vw, 120px)">
           <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white"/>
         </svg>
       </div>
