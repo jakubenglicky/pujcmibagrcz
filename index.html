@@ -45,6 +45,13 @@
         scroll-snap-align: center;
       }
 
+      /* Zavírka sezóny: zapíná/vypíná třída "sezona-ukoncena" na <body> */
+      .sezona-info { display: none; }
+      body.sezona-ukoncena .sezona-info { display: block; }
+      body.sezona-ukoncena span.sezona-info { display: inline; }
+      body.sezona-ukoncena #rezervacni-formular,
+      body.sezona-ukoncena #potvrzeni,
+      body.sezona-ukoncena .rezervace-uvod { display: none; }
       /* Flatpickr custom styling */
       .flatpickr-calendar {
         border-radius: 0.5rem;
@@ -116,7 +123,11 @@
     ></script> -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-100 sezona-ukoncena">
+    <div class="sezona-info bg-gray-900 text-white text-center text-sm md:text-base py-3 px-4">
+      <strong>Sezóna 2026 je ukončena.</strong> Nové poptávky už nepřijímáme, minibagr opět půjčujeme na jaře.
+    </div>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -161,7 +172,7 @@
               href="/#rezervace"
               class="bg-white text-orange-600 font-bold py-4 px-8 rounded-xl shadow-2xl hover:bg-gray-50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-lg"
             >
-              📅 Rezervovat termín
+              <span class="rezervace-uvod">📅 Rezervovat termín</span><span class="sezona-info">❄️ Sezóna ukončena</span>
             </a>
             <a
               href="/#cenik"
@@ -604,8 +615,16 @@
 
       <div class="max-w-5xl mx-auto px-4 relative z-10">
         <!-- Header -->
-        <div class="text-center mb-12">
-          <div class="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+        <div class="sezona-info max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-8 md:p-10 text-center">
+          <div class="text-5xl mb-4">❄️</div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Sezóna je ukončena</h2>
+          <p class="text-lg text-gray-600 leading-relaxed">
+            Pro letošek už minibagr nepůjčujeme a nové poptávky nepřijímáme.
+            Těšíme se na vás zase na jaře — sledujte tento web.
+          </p>
+        </div>
+
+        <div class="rezervace-uvod text-center mb-12">          <div class="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-semibold mb-4">
             Rezervace
           </div>
           <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
@@ -1666,6 +1685,7 @@
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        if (document.body.classList.contains("sezona-ukoncena")) return;
 
         // Validace termínu
         const datum = document.getElementById("datum-start").value;
